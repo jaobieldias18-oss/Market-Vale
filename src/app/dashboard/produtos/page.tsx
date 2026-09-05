@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProductManager from "@/components/product-manager";
-import type { Store, StoreProduct } from "@/lib/types";
+import type { Store, StoreProduct, StoreTabRow } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -17,11 +17,16 @@ export default async function ProdutosPage() {
   const store = storeData as Store | null;
   if (!store) redirect("/dashboard");
 
-  const { data: products } = await supabase
-    .from("store_products")
-    .select("*")
-    .eq("store_id", store.id)
-    .order("sort_order");
+  const [productsRes, tabsRes] = await Promise.all([
+    supabase.from("store_products").select("*").eq("store_id", store.id).order("sort_order"),
+    supabase.from("store_tabs").select("*").eq("store_id", store.id).order("sort_order"),
+  ]);
 
-  return <ProductManager store={store} products={(products as StoreProduct[]) ?? []} />;
+  return (
+    <ProductManager
+      store={store}
+      products={(productsRes.data as StoreProduct[]) ?? []}
+      tabs={(tabsRes.data as StoreTabRow[]) ?? []}
+    />
+  );
 }

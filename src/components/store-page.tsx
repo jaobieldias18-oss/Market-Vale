@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Category, DetailField, Store, StoreGalleryItem, StoreProduct } from "@/lib/types";
+import type { Category, DetailField, Store, StoreGalleryItem, StoreProduct, StoreTabRow } from "@/lib/types";
 import { getCategoryFields } from "@/lib/constants";
 import {
   storageUrl,
@@ -126,11 +126,13 @@ export default function StorePage({
   category,
   gallery,
   products = [],
+  tabs: storeTabs = [],
 }: {
   store: Store;
   category: Category | null;
   gallery: StoreGalleryItem[];
   products?: StoreProduct[];
+  tabs?: StoreTabRow[];
 }) {
   const theme = store.theme ?? { primary: "#16a34a", secondary: "#064e3b", font: "sans" };
   const template = TEMPLATES[store.template] ?? "centered";
@@ -190,7 +192,45 @@ export default function StorePage({
   }
   tabs.push({ id: "sobre", label: "Sobre", content: <div className="grid gap-8">{sobreContent}</div> });
 
-  if (products.length > 0) {
+  const hasCustomTabs = storeTabs.length > 0;
+  const orphanProducts = products.filter((p) => !p.tab_id);
+
+  if (hasCustomTabs) {
+    const sortedTabs = [...storeTabs].sort((a, b) => a.sort_order - b.sort_order);
+    for (const st of sortedTabs) {
+      const tabProducts = products.filter((p) => p.tab_id === st.id);
+      tabs.push({
+        id: `tab-${st.id}`,
+        label: st.label,
+        content: (
+          <div className="grid gap-6">
+            {(st.payment_methods ?? []).length > 0 && (
+              <p className="text-center text-sm text-slate-500">
+                Formas de pagamento:{" "}
+                <span className="font-semibold" style={{ color: theme.primary }}>
+                  {st.payment_methods!.join(" · ")}
+                </span>
+              </p>
+            )}
+            {tabProducts.length > 0 ? (
+              <ProductGrid store={store} products={tabProducts} accent={theme.primary} />
+            ) : (
+              <p className="py-10 text-center text-sm text-slate-400">
+                Nenhum produto nesta aba ainda. Em breve...
+              </p>
+            )}
+          </div>
+        ),
+      });
+    }
+    if (orphanProducts.length > 0) {
+      tabs.push({
+        id: "produtos",
+        label: "Produtos",
+        content: <ProductGrid store={store} products={orphanProducts} accent={theme.primary} />,
+      });
+    }
+  } else if (products.length > 0) {
     tabs.push({
       id: "produtos",
       label: "Produtos",

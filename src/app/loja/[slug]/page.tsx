@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import StorePage from "@/components/store-page";
-import type { Category, Store, StoreGalleryItem, StoreProduct } from "@/lib/types";
+import type { Category, Store, StoreGalleryItem, StoreProduct, StoreTabRow } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -45,17 +45,20 @@ export default async function StoreLinkPage({
     // views increment is best-effort
   }
 
-  const [catRes, galleryRes, productsRes] = await Promise.all([
+  const [catRes, galleryRes, productsRes, tabsRes] = await Promise.allSettled([
     store.category_id
       ? supabase.from("categories").select("*").eq("id", store.category_id).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from("store_gallery").select("*").eq("store_id", store.id).order("sort_order"),
     supabase.from("store_products").select("*").eq("store_id", store.id).eq("is_active", true).order("sort_order"),
+    supabase.from("store_tabs").select("*").eq("store_id", store.id).order("sort_order"),
   ]);
 
-  const category = (catRes as { data: Category | null }).data;
-  const gallery = (galleryRes.data as StoreGalleryItem[]) ?? [];
-  const products = (productsRes.data as StoreProduct[]) ?? [];
+  const category =
+    catRes.status === "fulfilled" ? (catRes.value as { data: Category | null }).data : null;
+  const gallery = galleryRes.status === "fulfilled" ? ((galleryRes.value.data as StoreGalleryItem[]) ?? []) : [];
+  const products = productsRes.status === "fulfilled" ? ((productsRes.value.data as StoreProduct[]) ?? []) : [];
+  const tabs = tabsRes.status === "fulfilled" ? ((tabsRes.value.data as StoreTabRow[]) ?? []) : [];
 
-  return <StorePage store={store} category={category} gallery={gallery} products={products} />;
+  return <StorePage store={store} category={category} gallery={gallery} products={products} tabs={tabs} />;
 }

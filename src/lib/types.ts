@@ -86,8 +86,18 @@ export interface StoreProduct {
   price: number | null;
   image_url: string | null;
   category: string | null;
+  tab_id: string | null;
   sort_order: number;
   is_active: boolean;
+  created_at: string;
+}
+
+export interface StoreTabRow {
+  id: string;
+  store_id: string;
+  label: string;
+  payment_methods: string[] | null;
+  sort_order: number;
   created_at: string;
 }
 

@@ -8,7 +8,7 @@ import { LogOut, Settings, Image, CreditCard, Package } from "lucide-react";
 const links = [
   { href: "/dashboard", label: "Visão geral" },
   { href: "/dashboard/configuracao", label: "Meu site", icon: Settings },
-  { href: "/dashboard/produtos", label: "Produtos", icon: Package },
+  { href: "/dashboard/produtos", label: "Catálogo", icon: Package },
   { href: "/dashboard/fotos", label: "Fotos", icon: Image },
   { href: "/dashboard/assinatura", label: "Plano", icon: CreditCard },
 ];

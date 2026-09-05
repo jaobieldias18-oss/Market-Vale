@@ -110,6 +110,18 @@ create unique index if not exists subscriptions_stripe_subscription_key
   where stripe_subscription_id is not null;
 
 -- ------------------------------------------------------------
+-- ABAS CUSTOMIZADAS (site próprio da loja)
+-- ------------------------------------------------------------
+create table if not exists public.store_tabs (
+  id uuid primary key default gen_random_uuid(),
+  store_id uuid not null references public.stores(id) on delete cascade,
+  label text not null,
+  payment_methods jsonb not null default '[]'::jsonb,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now()
+);
+
+-- ------------------------------------------------------------
 -- PRODUTOS / ITENS DA LOJA
 -- ------------------------------------------------------------
 create table if not exists public.store_products (
@@ -120,6 +132,7 @@ create table if not exists public.store_products (
   price numeric,
   image_url text,
   category text,
+  tab_id uuid references public.store_tabs(id) on delete set null,
   sort_order int not null default 0,
   is_active boolean not null default true,
   created_at timestamptz not null default now(),
@@ -183,6 +196,7 @@ alter table public.stores enable row level security;
 alter table public.subscriptions enable row level security;
 alter table public.store_gallery enable row level security;
 alter table public.store_products enable row level security;
+alter table public.store_tabs enable row level security;
 
 -- planos: qualquer um pode ler
 create policy "plans public read" on public.plans
@@ -248,6 +262,16 @@ create policy "products owner all" on public.store_products
     auth.uid() in (select owner_id from public.stores where id = store_id)
   );
 create policy "products admin all" on public.store_products
+  for all using (public.is_admin());
+
+-- abas: público lê ativas; dono gerencia; admin tudo
+create policy "tabs public read active" on public.store_tabs
+  for select using (store_id in (select id from public.stores where status = 'active'));
+create policy "tabs owner all" on public.store_tabs
+  for all using (
+    auth.uid() in (select owner_id from public.stores where id = store_id)
+  );
+create policy "tabs admin all" on public.store_tabs
   for all using (public.is_admin());
 
 -- ------------------------------------------------------------
