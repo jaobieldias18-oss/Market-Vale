@@ -28,6 +28,18 @@ create table if not exists public.profiles (
   created_at timestamptz not null default now()
 );
 
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select exists(
+    select 1 from public.profiles where id = auth.uid() and role = 'admin'
+  );
+$$;
+
 -- ------------------------------------------------------------
 -- CATEGORIAS DE NEGÓCIO
 -- ------------------------------------------------------------
@@ -148,7 +160,7 @@ alter table public.store_gallery enable row level security;
 create policy "plans public read" on public.plans
   for select using (true);
 create policy "plans admin write" on public.plans
-  for all using ((select role from public.profiles where id = auth.uid()) = 'admin');
+  for all using (public.is_admin());
 
 -- perfis: usuário lê/atualiza o próprio; admin lê tudo
 create policy "profiles read own" on public.profiles
@@ -156,13 +168,13 @@ create policy "profiles read own" on public.profiles
 create policy "profiles update own" on public.profiles
   for update using (auth.uid() = id);
 create policy "profiles admin all" on public.profiles
-  for all using ((select role from public.profiles where id = auth.uid()) = 'admin');
+  for all using (public.is_admin());
 
 -- categorias: público lê; admin escreve
 create policy "categories public read" on public.categories
   for select using (true);
 create policy "categories admin write" on public.categories
-  for all using ((select role from public.profiles where id = auth.uid()) = 'admin');
+  for all using (public.is_admin());
 
 -- lojas: público lê ativas; dono gerencia; admin gerencia tudo
 create policy "stores public read active" on public.stores
@@ -176,7 +188,7 @@ create policy "stores owner update" on public.stores
 create policy "stores owner delete" on public.stores
   for delete using (auth.uid() = owner_id);
 create policy "stores admin all" on public.stores
-  for all using ((select role from public.profiles where id = auth.uid()) = 'admin');
+  for all using (public.is_admin());
 
 -- assinaturas: dono lê da própria loja; admin tudo
 create policy "subscriptions owner read" on public.subscriptions
@@ -188,7 +200,7 @@ create policy "subscriptions owner insert" on public.subscriptions
     auth.uid() in (select owner_id from public.stores where id = store_id)
   );
 create policy "subscriptions admin all" on public.subscriptions
-  for all using ((select role from public.profiles where id = auth.uid()) = 'admin');
+  for all using (public.is_admin());
 
 -- galeria: público lê; dono gerencia; admin tudo
 create policy "gallery public read" on public.store_gallery
@@ -198,7 +210,7 @@ create policy "gallery owner all" on public.store_gallery
     auth.uid() in (select owner_id from public.stores where id = store_id)
   );
 create policy "gallery admin all" on public.store_gallery
-  for all using ((select role from public.profiles where id = auth.uid()) = 'admin');
+  for all using (public.is_admin());
 
 -- ------------------------------------------------------------
 -- STORAGE (bucket para fotos)
