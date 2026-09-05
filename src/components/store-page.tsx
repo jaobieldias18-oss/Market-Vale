@@ -1,4 +1,5 @@
-import type { Category, Store, StoreGalleryItem } from "@/lib/types";
+import type { ReactNode } from "react";
+import type { Category, DetailField, Store, StoreGalleryItem } from "@/lib/types";
 import { getCategoryFields } from "@/lib/constants";
 import {
   storageUrl,
@@ -6,6 +7,7 @@ import {
   mapLink,
   DAY_LABELS,
 } from "@/lib/utils";
+import StoreTabs, { type StoreTab } from "@/components/store-tabs";
 import {
   Clock,
   Facebook,
@@ -17,6 +19,35 @@ import {
   Phone,
   Utensils,
 } from "lucide-react";
+
+const GROUP_CARDAPIO = new Set([
+  "cardapio",
+  "especialidades",
+  "encomendas",
+  "reservas",
+  "entrega",
+  "delivery",
+  "bebida",
+  "prato",
+  "feira",
+  "petisco",
+  "buffet",
+]);
+
+const GROUP_SERVICOS = new Set([
+  "servico",
+  "servicos",
+  "atendimento",
+  "atuacao",
+  "agendamento",
+  "plantao",
+  "guincho",
+  "orcamento",
+  "tamanho",
+  "numero",
+  "novidade",
+  "regioes",
+]);
 
 function linkBadgeMeta(label: string) {
   const l = label.toLowerCase();
@@ -106,15 +137,80 @@ export default function StorePage({
 
   const logo = storageUrl(store.logo_url);
   const cover = storageUrl(store.cover_url);
-  const detailsEntries = Object.entries(categoryFields.fields).filter(([, field]) => {
+  const detailsEntries = (Object.entries(categoryFields.fields) as [string, DetailField][]).filter(([, field]) => {
     const value = store.details?.[field.key];
     if (Array.isArray(value)) return (value as unknown[]).length > 0;
     return !!value;
   });
-  const hasDetails = detailsEntries.length > 0;
   const hasHours = Array.isArray(store.opening_hours) && store.opening_hours.length > 0;
 
   const premium = store.plan_id === "premium";
+
+  const sobreEntries = detailsEntries.filter(
+    ([, field]) => !GROUP_CARDAPIO.has(field.key) && !GROUP_SERVICOS.has(field.key)
+  );
+  const cardapioEntries = detailsEntries.filter(([, field]) => GROUP_CARDAPIO.has(field.key));
+  const servicosEntries = detailsEntries.filter(([, field]) => GROUP_SERVICOS.has(field.key));
+
+  const tabs: StoreTab[] = [];
+
+  const sobreContent: ReactNode[] = [];
+  if (store.description) {
+    sobreContent.push(
+      <p key="desc" className="text-pretty leading-relaxed text-slate-700">
+        {store.description}
+      </p>
+    );
+  }
+  if (sobreEntries.length > 0) {
+    sobreContent.push(
+      <div key="info">
+        <h2 className="text-lg font-semibold" style={{ color: theme.primary }}>
+          Informações
+        </h2>
+        <div className="mt-4">
+          <FieldRows entries={sobreEntries} store={store} />
+        </div>
+      </div>
+    );
+  }
+  if (hasHours) {
+    sobreContent.push(
+      <div key="horas">
+        <h2 className="text-lg font-semibold" style={{ color: theme.primary }}>
+          Horário de funcionamento
+        </h2>
+        <div className="mt-4">
+          <HoursBody store={store} accent={theme.primary} />
+        </div>
+      </div>
+    );
+  }
+  tabs.push({ id: "sobre", label: "Sobre", content: <div className="grid gap-8">{sobreContent}</div> });
+
+  if (cardapioEntries.length > 0) {
+    tabs.push({
+      id: "cardapio",
+      label: "Cardápio",
+      content: <FieldRows entries={cardapioEntries} store={store} />,
+    });
+  }
+  if (servicosEntries.length > 0) {
+    tabs.push({
+      id: "servicos",
+      label: "Serviços",
+      content: <FieldRows entries={servicosEntries} store={store} />,
+    });
+  }
+  if (premium && gallery.length > 0) {
+    tabs.push({
+      id: "fotos",
+      label: "Fotos",
+      content: <Gallery gallery={gallery} accent={theme.primary} heading="Fotos" />,
+    });
+  }
+
+  const body = <StoreTabs tabs={tabs} accent={theme.primary} />;
 
   if (template === "elegant") {
     return (
@@ -134,12 +230,12 @@ export default function StorePage({
               <span className="text-4xl">{category?.icon ?? "✨"}</span>
             )}
           </div>
-          <h1 className="mt-4 text-4xl" style={{ fontFamily: font }}>{store.name}</h1>
-          {store.city && <p className="mt-1 text-sm uppercase tracking-widest text-stone-500">{store.city} · Vale do Ribeira</p>}
-          {premium && <Badge text="Premium" />}
-          {store.description && <p className="mt-6 text-pretty leading-relaxed text-stone-600">{store.description}</p>}
-          <DetailSections store={store} hasDetails={hasDetails} hasHours={hasHours} detailsEntries={detailsEntries} accent={theme.primary} />
-          <Gallery gallery={gallery} accent={theme.primary} />
+          <h1 className="mt-4 text-center text-4xl" style={{ fontFamily: font }}>{store.name}</h1>
+          {store.city && <p className="mt-1 text-center text-sm uppercase tracking-widest text-stone-500">{store.city} · Vale do Ribeira</p>}
+          {premium && (
+            <div className="mt-3 flex justify-center"><Badge text="Premium" /></div>
+          )}
+          <div className="mt-8">{body}</div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <ContactButtons store={store} accent={theme.primary} />
           </div>
@@ -181,16 +277,7 @@ export default function StorePage({
             <ExternalLinks store={store} />
           </aside>
 
-          <main>
-            {store.description && <p className="text-pretty leading-relaxed text-slate-700">{store.description}</p>}
-            <DetailCard title="Informações" has={hasDetails}>
-              <DetailsBody store={store} detailsEntries={detailsEntries} />
-            </DetailCard>
-            <DetailCard title="Horário de funcionamento" has={hasHours}>
-              <HoursBody store={store} accent={theme.primary} />
-            </DetailCard>
-            <Gallery gallery={gallery} accent={theme.primary} />
-          </main>
+          <main>{body}</main>
         </div>
       </div>
     );
@@ -224,19 +311,7 @@ export default function StorePage({
           )}
         </div>
 
-        {store.description && (
-          <p className="mt-6 text-center text-pretty leading-relaxed text-slate-600">{store.description}</p>
-        )}
-
-        <DetailCard title="Informações" has={hasDetails}>
-          <DetailsBody store={store} detailsEntries={detailsEntries} />
-        </DetailCard>
-
-        <DetailCard title="Horário de funcionamento" has={hasHours}>
-          <HoursBody store={store} accent={theme.primary} />
-        </DetailCard>
-
-        <Gallery gallery={gallery} accent={theme.primary} />
+        <div className="mt-8">{body}</div>
 
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <ContactButtons store={store} accent={theme.primary} />
@@ -249,88 +324,23 @@ export default function StorePage({
 
 function Badge({ text }: { text: string }) {
   return (
-    <span className="mt-3 inline-block rounded-full bg-amber-400 px-3 py-1 text-xs font-bold text-amber-950">
+    <span className="inline-block rounded-full bg-amber-400 px-3 py-1 text-xs font-bold text-amber-950">
       {text}
     </span>
   );
 }
 
-function DetailSections({
+function FieldRows({
+  entries,
   store,
-  hasDetails,
-  hasHours,
-  detailsEntries,
-  accent,
 }: {
+  entries: [string, DetailField][];
   store: Store;
-  hasDetails: boolean;
-  hasHours: boolean;
-  detailsEntries: [string, { key: string; label: string; type: string }][];
-  accent: string;
-}) {
-  return (
-    <div className="mt-8 space-y-10">
-      {hasDetails && (
-        <div>
-          <h2 className="text-lg font-semibold" style={{ color: accent }}>Informações</h2>
-          <div className="mt-4 space-y-4">
-            {detailsEntries.map(([key, field]) => (
-              <div key={key}>
-                <p className="text-sm font-medium text-stone-500">{field.label}</p>
-                <div className="mt-1">
-                  <DetailValue value={store.details?.[field.key]} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {hasHours && (
-        <div>
-          <h2 className="text-lg font-semibold" style={{ color: accent }}>Horário de funcionamento</h2>
-          <ul className="mt-4 space-y-1 text-sm">
-            {(store.opening_hours ?? []).map((h) => (
-              <li key={h.day} className="flex justify-between border-b border-dashed border-stone-200 pb-1">
-                <span>{DAY_LABELS[h.day]}</span>
-                <span>{h.closed ? "Fechado" : `${h.open} – ${h.close}`}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DetailCard({
-  title,
-  has,
-  children,
-}: {
-  title: string;
-  has: boolean;
-  children: React.ReactNode;
-}) {
-  if (!has) return null;
-  return (
-    <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-      <h2 className="font-semibold text-slate-800">{title}</h2>
-      <div className="mt-4">{children}</div>
-    </section>
-  );
-}
-
-function DetailsBody({
-  store,
-  detailsEntries,
-}: {
-  store: Store;
-  detailsEntries: [string, { key: string; label: string; type: string }][];
 }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      {detailsEntries.map(([key, field]) => (
-        <div key={key} className="rounded-xl bg-slate-50 p-4">
+      {entries.map(([, field]) => (
+        <div key={field.key} className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
           <p className="text-sm font-medium text-slate-500">{field.label}</p>
           <div className="mt-1">
             <DetailValue value={store.details?.[field.key]} />
@@ -345,7 +355,7 @@ function HoursBody({ store, accent }: { store: Store; accent: string }) {
   return (
     <ul className="space-y-1.5 text-sm">
       {(store.opening_hours ?? []).map((h) => (
-        <li key={h.day} className="flex justify-between border-b border-dashed border-slate-200 pb-1">
+        <li key={h.day} className="flex justify-between border-b border-dashed border-slate-300 pb-1">
           <span className="font-medium">{DAY_LABELS[h.day]}</span>
           <span style={{ color: h.closed ? undefined : accent }}>
             {h.closed ? "Fechado" : `${h.open} – ${h.close}`}
@@ -356,11 +366,11 @@ function HoursBody({ store, accent }: { store: Store; accent: string }) {
   );
 }
 
-function Gallery({ gallery, accent }: { gallery: StoreGalleryItem[]; accent: string }) {
+function Gallery({ gallery, accent, heading = "Galeria" }: { gallery: StoreGalleryItem[]; accent: string; heading?: string }) {
   if (gallery.length === 0) return null;
   return (
-    <section className="mt-10">
-      <h2 className="text-center text-lg font-semibold" style={{ color: accent }}>Galeria</h2>
+    <section>
+      <h2 className="text-lg font-semibold" style={{ color: accent }}>{heading}</h2>
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {gallery.map((item) => {
           const url = storageUrl(item.url);
