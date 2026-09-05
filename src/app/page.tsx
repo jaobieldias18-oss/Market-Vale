@@ -25,16 +25,17 @@ async function getData() {
   const recent: Store[] = [];
   const categoryById = new Map<string, Category>();
 
+  const PLAN_PRIORITY: Record<string, number> = { premium: 3, profissional: 2, basico: 1 };
+
   const supabase = await createClient();
-  const [catsRes, featRes, recRes, countRes, citiesRes] = await Promise.allSettled([
+  const [catsRes, storePoolRes, recRes, countRes, citiesRes] = await Promise.allSettled([
     supabase.from("categories").select("*").order("sort_order"),
     supabase
       .from("stores")
       .select("*")
       .eq("status", "active")
-      .order("is_featured", { ascending: false })
       .order("views", { ascending: false })
-      .limit(4),
+      .limit(12),
     supabase.from("stores").select("*").eq("status", "active").order("created_at", { ascending: false }).limit(8),
     supabase.from("stores").select("id", { count: "exact", head: true }).eq("status", "active"),
     supabase.from("stores").select("city").eq("status", "active"),
@@ -58,8 +59,16 @@ async function getData() {
   }
   for (const c of categories) categoryById.set(c.id, c);
 
-  if (featRes.status === "fulfilled" && featRes.value.data) {
-    featured.push(...(featRes.value.data as Store[]));
+  if (storePoolRes.status === "fulfilled" && storePoolRes.value.data) {
+    const pool = storePoolRes.value.data as Store[];
+    pool.sort((a, b) => {
+      if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
+      const pa = PLAN_PRIORITY[a.plan_id] ?? 0;
+      const pb = PLAN_PRIORITY[b.plan_id] ?? 0;
+      if (pa !== pb) return pb - pa;
+      return (b.views ?? 0) - (a.views ?? 0);
+    });
+    featured.push(...pool.slice(0, 4));
   }
   if (recRes.status === "fulfilled" && recRes.value.data) {
     recent.push(...(recRes.value.data as Store[]));
