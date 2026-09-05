@@ -9,12 +9,14 @@ import {
   FolderTree,
   FileText,
   Users,
+  CreditCard,
   LogOut,
 } from "lucide-react";
 
 const links = [
   { href: "/admin", label: "Visão geral", icon: LayoutDashboard },
   { href: "/admin/lojas", label: "Lojas", icon: Building2 },
+  { href: "/admin/assinaturas", label: "Assinaturas", icon: CreditCard },
   { href: "/admin/categorias", label: "Categorias", icon: FolderTree },
   { href: "/admin/planos", label: "Planos", icon: FileText },
   { href: "/admin/usuarios", label: "Usuários", icon: Users },
