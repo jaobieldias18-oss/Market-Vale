@@ -24,6 +24,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const supabase = createClient();
+    setHasSession(false);
+    setRole(null);
     supabase.auth.getUser().then(({ data }) => {
       setHasSession(!!data.user);
       setLoading(false);
