@@ -78,6 +78,19 @@ export interface StoreGalleryItem {
   sort_order: number;
 }
 
+export interface StoreProduct {
+  id: string;
+  store_id: string;
+  name: string;
+  description: string | null;
+  price: number | null;
+  image_url: string | null;
+  category: string | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
 export interface DetailField {
   key: string;
   label: string;

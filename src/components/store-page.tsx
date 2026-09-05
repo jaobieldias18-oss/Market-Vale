@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Category, DetailField, Store, StoreGalleryItem } from "@/lib/types";
+import type { Category, DetailField, Store, StoreGalleryItem, StoreProduct } from "@/lib/types";
 import { getCategoryFields } from "@/lib/constants";
 import {
   storageUrl,
@@ -125,10 +125,12 @@ export default function StorePage({
   store,
   category,
   gallery,
+  products = [],
 }: {
   store: Store;
   category: Category | null;
   gallery: StoreGalleryItem[];
+  products?: StoreProduct[];
 }) {
   const theme = store.theme ?? { primary: "#16a34a", secondary: "#064e3b", font: "sans" };
   const template = TEMPLATES[store.template] ?? "centered";
@@ -187,6 +189,14 @@ export default function StorePage({
     );
   }
   tabs.push({ id: "sobre", label: "Sobre", content: <div className="grid gap-8">{sobreContent}</div> });
+
+  if (products.length > 0) {
+    tabs.push({
+      id: "produtos",
+      label: "Produtos",
+      content: <ProductGrid store={store} products={products} accent={theme.primary} />,
+    });
+  }
 
   if (cardapioEntries.length > 0) {
     tabs.push({
@@ -349,6 +359,90 @@ function FieldRows({
       ))}
     </div>
   );
+}
+
+function ProductGrid({
+  store,
+  products,
+  accent,
+}: {
+  store: Store;
+  products: StoreProduct[];
+  accent: string;
+}) {
+  const waBase = store.whatsapp ? whatsappLink(store.whatsapp) : null;
+
+  function waMessage(p: StoreProduct) {
+    const price = p.price != null
+      ? ` ${p.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`
+      : "";
+    const pieces = [
+      `Olá! Tenho interesse no produto "${p.name}"${price}`,
+      p.description ? `\nDescrição: ${p.description}` : "",
+      `\nNegócio: ${store.name}`,
+    ];
+    return encodeURIComponent(pieces.join(""));
+  }
+
+  return (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map((p) => {
+        const img = storageUrl(p.image_url);
+        return (
+          <div key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            {img ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={img} alt={p.name} className="aspect-[4/3] w-full object-cover" />
+            ) : (
+              <div className="grid aspect-[4/3] w-full place-items-center bg-slate-100 text-3xl" style={{ color: accent }}>
+                {categoryIcon(p.category) ?? "✨"}
+              </div>
+            )}
+            <div className="flex flex-1 flex-col p-4">
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="font-semibold text-slate-800">{p.name}</h3>
+                {p.price != null && (
+                  <span className="shrink-0 font-bold" style={{ color: accent }}>
+                    {p.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                  </span>
+                )}
+              </div>
+              {p.category && (
+                <p className="mt-0.5 text-xs font-medium uppercase tracking-wide text-slate-400">{p.category}</p>
+              )}
+              {p.description && <p className="mt-2 line-clamp-3 text-sm text-slate-500">{p.description}</p>}
+              {waBase && (
+                <div className="mt-auto pt-4">
+                  <a
+                    href={`${waBase}?text=${waMessage(p)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
+                    style={{ backgroundColor: accent }}
+                  >
+                    <MessageCircle className="size-4" />
+                    {p.price != null ? "Comprar via WhatsApp" : "Saber mais"}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function categoryIcon(cat: string | null): string | null {
+  if (!cat) return null;
+  const c = cat.toLowerCase();
+  if (/(bolo|doce|torta|confei)/.test(c)) return "🧁";
+  if (/(salgad|coxinha|lanche)/.test(c)) return "🥪";
+  if (/(prato|almo|comida|refei)/.test(c)) return "🍽️";
+  if (/(bebida|suco|refrigerante|cerveja)/.test(c)) return "🥤";
+  if (/(verdura|legume|fruta|horti)/.test(c)) return "🥬";
+  if (/(carne|açougue|açou)/.test(c)) return "🥩";
+  return "🛍️";
 }
 
 function HoursBody({ store, accent }: { store: Store; accent: string }) {

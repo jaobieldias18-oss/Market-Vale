@@ -47,11 +47,11 @@ export const PLANS: Plan[] = [
 
 export const FEATURE_LIMITS: Record<
   PlanId,
-  { gallery: number; custom_theme: boolean; details: boolean; priority: boolean; links: boolean; hours: boolean }
+  { gallery: number; custom_theme: boolean; details: boolean; priority: boolean; links: boolean; hours: boolean; products: number }
 > = {
-  basico: { gallery: 0, custom_theme: false, details: false, priority: false, links: true, hours: true },
-  profissional: { gallery: 15, custom_theme: true, details: true, priority: true, links: true, hours: true },
-  premium: { gallery: 60, custom_theme: true, details: true, priority: true, links: true, hours: true },
+  basico: { gallery: 0, custom_theme: false, details: false, priority: false, links: true, hours: true, products: 0 },
+  profissional: { gallery: 15, custom_theme: true, details: true, priority: true, links: true, hours: true, products: 30 },
+  premium: { gallery: 60, custom_theme: true, details: true, priority: true, links: true, hours: true, products: 200 },
 };
 
 export interface MatrixRow {
