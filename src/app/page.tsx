@@ -184,7 +184,6 @@ function SearchBar() {
   return (
     <form
       action="/categorias/outros"
-      onSubmit={() => undefined}
       className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm"
     >
       <Search className="ml-2 size-5 text-slate-400" />
