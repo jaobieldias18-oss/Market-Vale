@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import Loading from "@/components/loading";
 import { formatDate } from "@/lib/utils";
 import type { Profile, Store } from "@/lib/types";
-import { ShieldCheck, Shield } from "lucide-react";
+import { ShieldCheck, Shield, Trash2 } from "lucide-react";
 
 interface ProfileRow extends Profile {
   stores: number;
@@ -14,20 +14,24 @@ interface ProfileRow extends Profile {
 export default function AdminUsuarios() {
   const [users, setUsers] = useState<ProfileRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   function load() {
     const supabase = createClient();
-    Promise.all([supabase.from("profiles").select("*"), supabase.from("stores").select("owner_id")]).then(
-      ([profilesRes, storesRes]) => {
-        const stores = (storesRes.data as Store[]) ?? [];
-        const rows: ProfileRow[] = ((profilesRes.data as Profile[]) ?? []).map((p) => ({
-          ...p,
-          stores: stores.filter((s) => s.owner_id === p.id).length,
-        }));
-        setUsers(rows.sort((a) => (a.role === "admin" ? -1 : 1)));
-        setLoading(false);
-      },
-    );
+    Promise.all([
+      supabase.auth.getUser(),
+      supabase.from("profiles").select("*"),
+      supabase.from("stores").select("owner_id"),
+    ]).then(([userRes, profilesRes, storesRes]) => {
+      const stores = (storesRes.data as Store[]) ?? [];
+      const rows: ProfileRow[] = ((profilesRes.data as Profile[]) ?? []).map((p) => ({
+        ...p,
+        stores: stores.filter((s) => s.owner_id === p.id).length,
+      }));
+      setUsers(rows.sort((a) => (a.role === "admin" ? -1 : 1)));
+      setCurrentUserId(userRes.data.user?.id ?? null);
+      setLoading(false);
+    });
   }
 
   useEffect(load, []);
@@ -38,6 +42,22 @@ export default function AdminUsuarios() {
     const supabase = createClient();
     const next = user.role === "admin" ? "owner" : "admin";
     await supabase.from("profiles").update({ role: next }).eq("id", user.id);
+    load();
+  }
+
+  async function deleteUser(user: ProfileRow) {
+    if (!confirm(`Excluir a conta de ${user.email}?`)) return;
+    if (!confirm("Isso remove a conta, a loja, produtos e fotos dele. Tem certeza?")) return;
+    const res = await fetch("/api/admin/users/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: user.id }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) {
+      alert(data.error ?? "Não foi possível excluir.");
+      return;
+    }
     load();
   }
 
@@ -54,6 +74,7 @@ export default function AdminUsuarios() {
               <th className="px-4 py-3">Lojas</th>
               <th className="px-4 py-3">Cadastro</th>
               <th className="px-4 py-3">Função</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -77,6 +98,17 @@ export default function AdminUsuarios() {
                     {user.role === "admin" ? <ShieldCheck className="size-3.5" /> : <Shield className="size-3.5" />}
                     {user.role === "admin" ? "Administrador" : "Lojista"}
                   </button>
+                </td>
+                <td className="px-4 py-3 text-right">
+                  {user.role !== "admin" && user.id !== currentUserId && (
+                    <button
+                      onClick={() => deleteUser(user)}
+                      className="inline-flex items-center gap-1 rounded-lg border border-red-100 px-2.5 py-1.5 text-xs font-medium text-red-500 transition hover:bg-red-50"
+                      title="Remover usuário"
+                    >
+                      <Trash2 className="size-3.5" /> Remover
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
