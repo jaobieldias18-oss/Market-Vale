@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -11,10 +11,10 @@ export async function POST(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "FaÃ§a login para gerenciar." }, { status: 401 });
+    return NextResponse.json({ error: "Faça login para gerenciar." }, { status: 401 });
   }
   if (!process.env.STRIPE_SECRET_KEY) {
-    return NextResponse.json({ error: "Stripe ainda nÃ£o configurado." }, { status: 501 });
+    return NextResponse.json({ error: "Stripe ainda não configurado." }, { status: 501 });
   }
 
   const admin = createAdminClient();
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
   if (!customerId) {
     return NextResponse.json(
-      { error: "Nenhuma assinatura encontrada. Assine um plano com cartÃ£o primeiro." },
+      { error: "Nenhuma assinatura encontrada. Assine um plano com cartão primeiro." },
       { status: 404 },
     );
   }

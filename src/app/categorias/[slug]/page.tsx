@@ -1,4 +1,4 @@
-﻿import { notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -78,7 +78,7 @@ export default async function CategoryPage({
         {stores.length === 0 ? (
           <div className="mt-14 text-center">
             <p className="text-4xl">{meta.icon}</p>
-            <h2 className="mt-4 text-xl font-semibold">Nenhum negÃ³cio encontrado ainda</h2>
+            <h2 className="mt-4 text-xl font-semibold">Nenhum negócio encontrado ainda</h2>
             <p className="mt-2 text-slate-500">
               Seja o primeiro da categoria {meta.name} a aparecer aqui.
             </p>
@@ -92,7 +92,7 @@ export default async function CategoryPage({
         ) : (
           <>
             <p className="mt-8 text-sm text-slate-500">
-              {stores.length} negÃ³cio{stores.length > 1 ? "s" : ""} encontrado{stores.length > 1 ? "s" : ""}
+              {stores.length} negócio{stores.length > 1 ? "s" : ""} encontrado{stores.length > 1 ? "s" : ""}
             </p>
             <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {stores.map((store) => (

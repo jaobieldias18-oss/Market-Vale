@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import { PLANS } from "@/lib/constants";
 import type { PlanId } from "@/lib/types";
 
 export function hasStripe(): boolean {
@@ -16,14 +15,17 @@ export function stripe(): Stripe {
 
 const priceCache = new Map<string, string>();
 
-export async function getOrCreatePrice(planId: PlanId): Promise<string | null> {
-  const plan = PLANS.find((p) => p.id === planId);
-  if (!plan) return null;
-  const cached = priceCache.get(planId);
+export async function getOrCreatePrice(
+  planId: PlanId,
+  priceMonthly: number,
+  name?: string,
+): Promise<string | null> {
+  const cacheKey = `${planId}:${priceMonthly}`;
+  const cached = priceCache.get(cacheKey);
   if (cached) return cached;
 
   const client = stripe();
-  const productMetaId = `marketvale-plan-${plan.id}`;
+  const productMetaId = `marketvale-plan-${planId}`;
 
   let product: Stripe.Product | undefined;
   const existing = await client.products.list({ active: true, limit: 100 });
@@ -31,12 +33,12 @@ export async function getOrCreatePrice(planId: PlanId): Promise<string | null> {
 
   if (!product) {
     product = await client.products.create({
-      name: `Market Vale · ${plan.name}`,
+      name: `Market Vale · ${name ?? planId}`,
       metadata: { marketvale_id: productMetaId },
     });
   }
 
-  const amount = Math.round(Number(plan.price_monthly) * 100);
+  const amount = Math.round(Number(priceMonthly) * 100);
   const prices = await client.prices.list({ product: product.id, active: true, limit: 100 });
   const match = prices.data.find(
     (p) =>
@@ -45,7 +47,7 @@ export async function getOrCreatePrice(planId: PlanId): Promise<string | null> {
       p.currency === "brl",
   );
   if (match) {
-    priceCache.set(planId, match.id);
+    priceCache.set(cacheKey, match.id);
     return match.id;
   }
 
@@ -55,7 +57,7 @@ export async function getOrCreatePrice(planId: PlanId): Promise<string | null> {
     currency: "brl",
     recurring: { interval: "month" },
   });
-  priceCache.set(planId, created.id);
+  priceCache.set(cacheKey, created.id);
   return created.id;
 }
 

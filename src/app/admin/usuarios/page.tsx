@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -43,17 +43,17 @@ export default function AdminUsuarios() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      <h1 className="text-2xl font-bold text-slate-900">UsuÃ¡rios</h1>
-      <p className="mt-1 text-sm text-slate-500">{users.length} usuÃ¡rios cadastrados</p>
+      <h1 className="text-2xl font-bold text-slate-900">Usuários</h1>
+      <p className="mt-1 text-sm text-slate-500">{users.length} usuários cadastrados</p>
 
       <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
             <tr>
-              <th className="px-4 py-3">UsuÃ¡rio</th>
+              <th className="px-4 py-3">Usuário</th>
               <th className="px-4 py-3">Lojas</th>
               <th className="px-4 py-3">Cadastro</th>
-              <th className="px-4 py-3">FunÃ§Ã£o</th>
+              <th className="px-4 py-3">Função</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">

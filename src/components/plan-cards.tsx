@@ -1,6 +1,10 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { PLANS, PLAN_MATRIX } from "@/lib/constants";
+import { createClient } from "@/lib/supabase/client";
 import { formatPrice } from "@/lib/utils";
-import type { PlanId } from "@/lib/types";
+import type { Plan, PlanId } from "@/lib/types";
 import { Check, Minus } from "lucide-react";
 
 const HIGHLIGHT: Record<string, string> = {
@@ -24,13 +28,30 @@ export default function PlanCards({
   onSelect?: (id: PlanId) => void;
   ctaHref?: string;
 }) {
+  const [plans, setPlans] = useState<Plan[]>(PLANS);
   const selectable = !!onSelect;
   const Clickable = selectable ? "button" : "a";
+
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      const { data } = await createClient()
+        .from("plans")
+        .select("*")
+        .order("sort_order");
+      if (active && Array.isArray(data) && data.length > 0) {
+        setPlans(data as Plan[]);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <div>
       <div className="grid gap-5 md:grid-cols-3">
-        {PLANS.map((plan) => {
+        {plans.map((plan) => {
           const price = Number(plan.price_monthly);
           const isCurrent = selected === plan.id;
           const highlight = HIGHLIGHT[plan.id];
@@ -125,7 +146,7 @@ export default function PlanCards({
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
               <th className="px-5 py-4 font-semibold">Comparar planos</th>
-              {PLANS.map((plan) => (
+              {plans.map((plan) => (
                 <th key={plan.id} className="px-5 py-4 text-center font-semibold">
                   {plan.name}
                 </th>
@@ -136,7 +157,7 @@ export default function PlanCards({
             {PLAN_MATRIX.map((row, i) => (
               <tr key={row.label} className={i % 2 ? "bg-slate-50/50" : ""}>
                 <td className="px-5 py-3 font-medium text-slate-700">{row.label}</td>
-                {PLANS.map((plan) => (
+                {plans.map((plan) => (
                   <td key={plan.id} className="px-5 py-3 text-center">
                     {row.plans.includes(plan.id) ? (
                       <Check className="mx-auto size-5 text-emerald-500" />

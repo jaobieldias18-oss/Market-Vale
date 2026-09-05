@@ -1,11 +1,11 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice } from "@/lib/utils";
 import { PLANS } from "@/lib/constants";
-import type { Store } from "@/lib/types";
+import type { Plan, Store } from "@/lib/types";
 import { Check, CreditCard, ExternalLink } from "lucide-react";
 
 const FEATURED: Record<string, string> = {
@@ -27,6 +27,23 @@ function PlansSectionInner({ store }: { store: Store }) {
   const [loading, setLoading] = useState<string | null>(null);
   const [portalLoading, setPortalLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [plans, setPlans] = useState<Plan[]>(PLANS);
+
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      const { data } = await createClient()
+        .from("plans")
+        .select("*")
+        .order("sort_order");
+      if (active && Array.isArray(data) && data.length > 0) {
+        setPlans(data as Plan[]);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const flag =
     searchParams.get("sucesso") === "1"
@@ -50,7 +67,7 @@ function PlansSectionInner({ store }: { store: Store }) {
       });
     const { error } = await supabase.from("stores").update({ plan_id: planId }).eq("id", store.id);
     if (error) setMsg("Não foi possível alterar o plano.");
-    else setMsg(`Plano atualizado! Agora você está no plano ${PLANS.find((p) => p.id === planId)?.name}.`);
+    else setMsg(`Plano atualizado! Agora você está no plano ${plans.find((p) => p.id === planId)?.name}.`);
   }
 
   async function subscribe(planId: string) {
@@ -129,7 +146,7 @@ function PlansSectionInner({ store }: { store: Store }) {
       )}
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {PLANS.map((plan) => {
+        {plans.map((plan) => {
           const isCurrent = store.plan_id === plan.id;
           const price = Number(plan.price_monthly);
           return (

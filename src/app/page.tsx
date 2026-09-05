@@ -1,4 +1,4 @@
-﻿import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CategoryCard from "@/components/category-card";
@@ -93,17 +93,17 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-4 pb-16 pt-20 text-center md:pt-24">
           <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/70 px-4 py-1.5 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur">
             <MapPin className="size-3.5" />
-            Vale do Ribeira Â· SÃ£o Paulo
+            Vale do Ribeira · São Paulo
           </span>
 
           <h1 className="animate-fade-up mx-auto mt-6 max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 md:text-6xl">
-            Todos os negÃ³cios da sua regiÃ£o,{" "}
-            <span className="gradient-text">em um sÃ³ lugar</span>
+            Todos os negócios da sua região,{" "}
+            <span className="gradient-text">em um só lugar</span>
           </h1>
 
           <p className="animate-fade-up mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
             Encontre confeitarias, cafeterias, advocacia, mercados e muito mais.
-            E se vocÃª Ã© lojista, crie o seu site em minutos.
+            E se você é lojista, crie o seu site em minutos.
           </p>
 
           <div className="animate-fade-up mx-auto mt-10 max-w-2xl">
@@ -122,14 +122,14 @@ export default async function HomePage() {
               href="/#categorias"
               className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:border-emerald-300 hover:text-emerald-700"
             >
-              Explorar negÃ³cios
+              Explorar negócios
             </Link>
           </div>
 
           <div className="animate-fade-up mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-4">
-            <HeroStat value={String(totalStores)} label="negÃ³cios cadastrados" />
+            <HeroStat value={String(totalStores)} label="negócios cadastrados" />
             <HeroStat value={String(categories.length)} label="categorias" />
-            <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da regiÃ£o" />
+            <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da região" />
           </div>
         </div>
       </section>
@@ -139,7 +139,7 @@ export default async function HomePage() {
           <div className="flex items-end justify-between">
             <div>
               <p className="flex items-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-emerald-600">
-                <Sparkles className="size-4" /> Os favoritos da regiÃ£o
+                <Sparkles className="size-4" /> Os favoritos da região
               </p>
               <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900 md:text-3xl">
                 Em destaque
@@ -167,13 +167,13 @@ export default async function HomePage() {
       <section id="categorias" className="mx-auto max-w-6xl scroll-mt-16 px-4 pt-20">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-emerald-600">
-            Procure por tipo de negÃ³cio
+            Procure por tipo de negócio
           </p>
           <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
             Explore por categoria
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-slate-600">
-            Um suporte especÃ­fico para cada tipo de negÃ³cio da regiÃ£o.
+            Um suporte específico para cada tipo de negócio da região.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -191,7 +191,7 @@ export default async function HomePage() {
                 Acabaram de chegar
               </p>
               <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900 md:text-3xl">
-                Novidades da regiÃ£o
+                Novidades da região
               </h2>
             </div>
           </div>
@@ -217,7 +217,7 @@ export default async function HomePage() {
               Para o lojista
             </p>
             <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight md:text-4xl">
-              Tenha um site prÃ³prio para o seu negÃ³cio
+              Tenha um site próprio para o seu negócio
             </h2>
           </div>
 
@@ -225,12 +225,12 @@ export default async function HomePage() {
             <Step
               icon={<StoreIcon className="size-6" />}
               title="1. Cadastre-se"
-              text="Crie sua conta gratuita e escolha a categoria do seu negÃ³cio."
+              text="Crie sua conta gratuita e escolha a categoria do seu negócio."
             />
             <Step
               icon={<MousePointerClick className="size-6" />}
               title="2. Monte seu site"
-              text="Escolha cores, layout, fotos, horÃ¡rios e preencha tudo no seu painel."
+              text="Escolha cores, layout, fotos, horários e preencha tudo no seu painel."
             />
             <Step
               icon={<Share2 className="size-6" />}
@@ -244,7 +244,7 @@ export default async function HomePage() {
               href="/cadastro"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-7 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl"
             >
-              ComeÃ§ar agora <ArrowRight className="size-4" />
+              Começar agora <ArrowRight className="size-4" />
             </Link>
           </div>
         </div>
@@ -264,7 +264,7 @@ function SearchBar() {
       <Search className="size-5 shrink-0 text-slate-400" />
       <input
         name="q"
-        placeholder="Buscar negÃ³cio ou categoria..."
+        placeholder="Buscar negócio ou categoria..."
         className="w-full bg-transparent text-slate-800 outline-none placeholder:text-slate-400"
       />
       <button

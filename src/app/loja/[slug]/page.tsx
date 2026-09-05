@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import StorePage from "@/components/store-page";
@@ -16,8 +16,8 @@ export async function generateMetadata({
   const supabase = await createClient();
   const { data } = await supabase.from("stores").select("name, description").eq("slug", slug).maybeSingle();
   return {
-    title: data ? data.name : "NegÃ³cio",
-    description: data?.description ?? "NegÃ³cio do Vale do Ribeira",
+    title: data ? data.name : "Negócio",
+    description: data?.description ?? "Negócio do Vale do Ribeira",
   };
 }
 

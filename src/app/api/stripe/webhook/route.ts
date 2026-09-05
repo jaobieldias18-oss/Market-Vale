@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, resolvePlanFromSubscription, renewsAtFromSubscription } from "@/lib/stripe";
@@ -64,10 +64,10 @@ async function verifyWebhookSignature(
 export async function POST(request: NextRequest) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret) {
-    return NextResponse.json({ error: "WEBHOOK_SECRET nÃ£o configurado." }, { status: 501 });
+    return NextResponse.json({ error: "WEBHOOK_SECRET não configurado." }, { status: 501 });
   }
   if (!process.env.STRIPE_SECRET_KEY) {
-    return NextResponse.json({ error: "STRIPE_SECRET_KEY nÃ£o configurada." }, { status: 501 });
+    return NextResponse.json({ error: "STRIPE_SECRET_KEY não configurada." }, { status: 501 });
   }
 
   const client = stripe();
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
 
   const event = await verifyWebhookSignature(body, signature, secret);
   if (!event) {
-    return NextResponse.json({ error: "Falha na verificaÃ§Ã£o da assinatura do webhook." }, { status: 400 });
+    return NextResponse.json({ error: "Falha na verificação da assinatura do webhook." }, { status: 400 });
   }
 
   const admin = createAdminClient();
