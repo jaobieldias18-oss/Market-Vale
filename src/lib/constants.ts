@@ -10,6 +10,8 @@ export const PLANS: Plan[] = [
       "Perfil completo (descrição, contato, endereço, WhatsApp)",
       "Aparece no catálogo Market Vale",
       "1 categoria de negócio",
+      "Horários de funcionamento",
+      "Links externos (Instagram, iFood, Aiqfome)",
     ],
     sort_order: 1,
   },
@@ -21,9 +23,9 @@ export const PLANS: Plan[] = [
       "Tudo do plano Básico",
       "Personalização completa: cores, fonte e capa",
       "Galeria de fotos (até 15 fotos)",
-      "Horários de funcionamento",
-      "Redes sociais e site externo",
+      "Informações específicas da categoria",
       "Destaque nos resultados da categoria",
+      "Cardápio digital",
     ],
     sort_order: 2,
   },
@@ -45,11 +47,11 @@ export const PLANS: Plan[] = [
 
 export const FEATURE_LIMITS: Record<
   PlanId,
-  { gallery: number; custom_theme: boolean; details: boolean; priority: boolean }
+  { gallery: number; custom_theme: boolean; details: boolean; priority: boolean; links: boolean; hours: boolean }
 > = {
-  basico: { gallery: 0, custom_theme: false, details: false, priority: false },
-  profissional: { gallery: 15, custom_theme: true, details: true, priority: true },
-  premium: { gallery: 60, custom_theme: true, details: true, priority: true },
+  basico: { gallery: 0, custom_theme: false, details: false, priority: false, links: true, hours: true },
+  profissional: { gallery: 15, custom_theme: true, details: true, priority: true, links: true, hours: true },
+  premium: { gallery: 60, custom_theme: true, details: true, priority: true, links: true, hours: true },
 };
 
 export interface MatrixRow {
@@ -61,12 +63,14 @@ export const PLAN_MATRIX: MatrixRow[] = [
   { label: "Página pública com link exclusivo", plans: ["basico", "profissional", "premium"] },
   { label: "Aparece no catálogo Market Vale", plans: ["basico", "profissional", "premium"] },
   { label: "Perfil completo (contato, endereço, WhatsApp)", plans: ["basico", "profissional", "premium"] },
-  { label: "Links externos (Instagram, iFood, Aiqfome)", plans: ["profissional", "premium"] },
+  { label: "Links externos (Instagram, iFood, Aiqfome)", plans: ["basico", "profissional", "premium"] },
+  { label: "Horários de funcionamento", plans: ["basico", "profissional", "premium"] },
   { label: "Personalização: cores, fonte e layout", plans: ["profissional", "premium"] },
   { label: "Galeria de fotos", plans: ["profissional", "premium"] },
-  { label: "Horários de funcionamento", plans: ["profissional", "premium"] },
+  { label: "Informações específicas da categoria", plans: ["profissional", "premium"] },
   { label: "Destaque nos resultados da categoria", plans: ["profissional", "premium"] },
-  { label: "Cardápio digital (mercados, marmitarias, restaurantes)", plans: ["premium"] },
+  { label: "Cardápio digital (mercados, marmitarias, restaurantes)", plans: ["profissional", "premium"] },
+  { label: "Posição priorizada no catálogo", plans: ["premium"] },
   { label: "Estatísticas de visitas", plans: ["premium"] },
   { label: "Selos Destaque e Premium", plans: ["premium"] },
   { label: "Suporte prioritário", plans: ["premium"] },

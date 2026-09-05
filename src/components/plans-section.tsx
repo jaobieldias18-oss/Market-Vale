@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice } from "@/lib/utils";
-import type { Plan, Store } from "@/lib/types";
+import { PLANS } from "@/lib/constants";
+import type { Store } from "@/lib/types";
 import { Check } from "lucide-react";
 
 const FEATURED: Record<string, string> = {
@@ -12,7 +13,7 @@ const FEATURED: Record<string, string> = {
   premium: "bg-slate-900 text-white shadow-xl",
 };
 
-export default function PlansSection({ store, plans }: { store: Store; plans: Plan[] }) {
+export default function PlansSection({ store }: { store: Store }) {
   const [loading, setLoading] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
 
@@ -34,7 +35,7 @@ export default function PlansSection({ store, plans }: { store: Store; plans: Pl
     if (error) {
       setMsg("Não foi possível alterar o plano.");
     } else {
-      setMsg(`Plano atualizado! Agora você está no plano ${plans.find((p) => p.id === planId)?.name}.`);
+      setMsg(`Plano atualizado! Agora você está no plano ${PLANS.find((p) => p.id === planId)?.name}.`);
     }
     setLoading(null);
   }
@@ -55,7 +56,7 @@ export default function PlansSection({ store, plans }: { store: Store; plans: Pl
       )}
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {plans.map((plan) => {
+        {PLANS.map((plan) => {
           const isCurrent = store.plan_id === plan.id;
           const price = Number(plan.price_monthly);
           return (

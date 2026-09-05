@@ -131,9 +131,13 @@ export default function StoreSettings({
     };
     if (hasCustom) {
       payload.details = details;
-      payload.opening_hours = hours;
       payload.template = template;
       payload.theme = theme;
+    }
+    if (limits.hours) {
+      payload.opening_hours = hours;
+    }
+    if (limits.links) {
       payload.links = links
         .map((l) => ({
           label: l.label.trim().replace(/^@/, ""),
@@ -265,7 +269,7 @@ export default function StoreSettings({
         </div>
       </Card>
 
-      <Card title="Redes sociais e apps (Instagram, iFood, Aiqfome)" locked={!hasCustom} plan="profissional">
+      <Card title="Redes sociais e apps (Instagram, iFood, Aiqfome)" locked={!limits.links} plan="basico">
         {hasCustom ? (
           <div className="space-y-4">
             <p className="text-sm text-slate-500">
@@ -323,7 +327,7 @@ export default function StoreSettings({
         </Card>
       ) : null}
 
-      <Card title="Horário de funcionamento" locked={!hasCustom} plan="profissional">
+      <Card title="Horário de funcionamento" locked={!limits.hours} plan="basico">
         {hasCustom ? (
           <div className="space-y-2">
             {hours.map((h) => (
