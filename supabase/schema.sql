@@ -74,6 +74,7 @@ create table if not exists public.stores (
   instagram text,
   facebook text,
   website text,
+  links jsonb not null default '[]'::jsonb,
   opening_hours jsonb,
   details jsonb not null default '{}'::jsonb,
   plan_id text not null default 'basico' references public.plans(id),

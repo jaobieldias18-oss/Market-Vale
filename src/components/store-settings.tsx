@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { FEATURE_LIMITS, getCategoryFields } from "@/lib/constants";
-import { slugify, storageUrl, DAY_LABELS } from "@/lib/utils";
-import type { Category, OpeningHour, Store } from "@/lib/types";
-import { Check, Lock, Upload, Camera } from "lucide-react";
+import { FEATURE_LIMITS, getCategoryFields, SUGGESTED_LINKS } from "@/lib/constants";
+import { slugify, storageUrl, DAY_LABELS, normalizeUrl } from "@/lib/utils";
+import type { Category, ExternalLink, OpeningHour, Store } from "@/lib/types";
+import { Check, Lock, Upload, Camera, Plus, Trash2 } from "lucide-react";
 
 const TEMPLATES = [
   { id: "classico", label: "Clássico", desc: "Visual centrado e clean" },
@@ -57,6 +57,7 @@ export default function StoreSettings({
   );
   const [template, setTemplate] = useState(store.template);
   const [theme, setTheme] = useState(store.theme ?? { primary: "#16a34a", secondary: "#064e3b", font: "sans" });
+  const [links, setLinks] = useState<ExternalLink[]>(store.links ?? []);
   const [logoUrl, setLogoUrl] = useState(store.logo_url ?? "");
   const [coverUrl, setCoverUrl] = useState(store.cover_url ?? "");
   const [saving, setSaving] = useState(false);
@@ -133,6 +134,12 @@ export default function StoreSettings({
       payload.opening_hours = hours;
       payload.template = template;
       payload.theme = theme;
+      payload.links = links
+        .map((l) => ({
+          label: l.label.trim().replace(/^@/, ""),
+          url: normalizeUrl(l.url),
+        }))
+        .filter((l) => l.label && l.url);
     }
 
     const { error } = await supabase.from("stores").update(payload).eq("id", store.id);
@@ -256,6 +263,23 @@ export default function StoreSettings({
             </Field>
           </div>
         </div>
+      </Card>
+
+      <Card title="Redes sociais e apps (Instagram, iFood, Aiqfome)" locked={!hasCustom} plan="profissional">
+        {hasCustom ? (
+          <div className="space-y-4">
+            <p className="text-sm text-slate-500">
+              Adicione atalhos que aparecem no site da sua loja: Instagram,
+              iFood, Aiqfome, Google Maps, site próprio e o que quiser.
+            </p>
+            <LinksEditor
+              values={links}
+              onChange={setLinks}
+            />
+          </div>
+        ) : (
+          <Locked overline="Disponível no plano Profissional" />
+        )}
       </Card>
 
       {limits.details || category ? (
@@ -524,6 +548,85 @@ function Locked({ overline }: { overline: string }) {
       <a href="/dashboard/assinatura" className="mt-1 text-sm font-semibold text-emerald-600 hover:underline">
         Fazer upgrade →
       </a>
+    </div>
+  );
+}
+
+function LinksEditor({
+  values,
+  onChange,
+}: {
+  values: ExternalLink[];
+  onChange: (values: ExternalLink[]) => void;
+}) {
+  function set(i: number, patch: Partial<ExternalLink>) {
+    onChange(values.map((l, idx) => (idx === i ? { ...l, ...patch } : l)));
+  }
+
+  function add(label = "") {
+    onChange([...values, { label, url: "" }]);
+  }
+
+  function remove(i: number) {
+    onChange(values.filter((_, idx) => idx !== i));
+  }
+
+  return (
+    <div className="space-y-3">
+      <datalist id="link-labels">
+        {SUGGESTED_LINKS.map((label) => (
+          <option key={label} value={label} />
+        ))}
+      </datalist>
+
+      {values.map((link, i) => (
+        <div key={i} className="grid items-center gap-2 sm:grid-cols-[170px_1fr_auto]">
+          <input
+            className="input"
+            list="link-labels"
+            value={link.label}
+            placeholder="Ex: iFood"
+            onChange={(e) => set(i, { label: e.target.value })}
+          />
+          <input
+            className="input"
+            value={link.url}
+            placeholder="https://... ou @usuario"
+            onChange={(e) => set(i, { url: e.target.value })}
+          />
+          <button
+            type="button"
+            onClick={() => remove(i)}
+            className="grid size-9 place-items-center rounded-lg text-red-500 hover:bg-red-50"
+            aria-label="Remover link"
+          >
+            <Trash2 className="size-4" />
+          </button>
+        </div>
+      ))}
+
+      <div className="flex flex-wrap items-center gap-2">
+        {SUGGESTED_LINKS.map((label) =>
+          values.some((l) => l.label.toLowerCase() === label.toLowerCase()) ? null : (
+            <button
+              key={label}
+              type="button"
+              onClick={() => add(label)}
+              className="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-500 transition hover:border-emerald-400 hover:text-emerald-600"
+            >
+              + {label}
+            </button>
+          ),
+        )}
+      </div>
+
+      <button
+        type="button"
+        onClick={() => add()}
+        className="flex items-center gap-1.5 rounded-lg border border-dashed border-slate-300 px-3 py-1.5 text-sm text-slate-500 hover:border-emerald-400 hover:text-emerald-600"
+      >
+        <Plus className="size-4" /> Adicionar link personalizado
+      </button>
     </div>
   );
 }

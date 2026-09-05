@@ -15,7 +15,48 @@ import {
   MapPin,
   MessageCircle,
   Phone,
+  Utensils,
 } from "lucide-react";
+
+function linkBadgeMeta(label: string) {
+  const l = label.toLowerCase();
+  if (l.includes("instagram"))
+    return { icon: <Instagram className="size-4" />, cls: "bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white" };
+  if (l.includes("ifood"))
+    return { icon: <Utensils className="size-4" />, cls: "bg-[#ea1d2c] text-white" };
+  if (l.includes("aiqfome"))
+    return { icon: <Utensils className="size-4" />, cls: "bg-[#ff6900] text-white" };
+  if (l.includes("whatsapp"))
+    return { icon: <MessageCircle className="size-4" />, cls: "bg-[#25d366] text-white" };
+  if (l.includes("facebook"))
+    return { icon: <Facebook className="size-4" />, cls: "bg-[#1877f2] text-white" };
+  if (l.includes("maps"))
+    return { icon: <MapPin className="size-4" />, cls: "bg-white border border-slate-300 text-slate-700" };
+  return { icon: <LinkIcon className="size-4" />, cls: "bg-white border border-slate-300 text-slate-700" };
+}
+
+function ExternalLinks({ store, center }: { store: Store; center?: boolean }) {
+  const links = (store.links ?? []).filter((l) => l.label && l.url);
+  if (links.length === 0) return null;
+  return (
+    <div className={`mt-4 flex flex-wrap gap-2 ${center ? "justify-center" : ""}`}>
+      {links.map((link, i) => {
+        const meta = linkBadgeMeta(link.label);
+        return (
+          <a
+            key={i}
+            href={link.url}
+            target="_blank"
+            rel="noreferrer"
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition hover:opacity-90 ${meta.cls}`}
+          >
+            {meta.icon} {link.label}
+          </a>
+        );
+      })}
+    </div>
+  );
+}
 
 const TEMPLATES: Record<string, string> = {
   classico: "centered",
@@ -102,6 +143,7 @@ export default function StorePage({
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <ContactButtons store={store} accent={theme.primary} />
           </div>
+          <ExternalLinks store={store} center />
         </div>
       </div>
     );
@@ -136,6 +178,7 @@ export default function StorePage({
             <div className="mt-6 space-y-3 text-sm text-slate-600">
               <ContactList store={store} accent={theme.primary} />
             </div>
+            <ExternalLinks store={store} />
           </aside>
 
           <main>
@@ -198,6 +241,7 @@ export default function StorePage({
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <ContactButtons store={store} accent={theme.primary} />
         </div>
+        <ExternalLinks store={store} center />
       </div>
     </div>
   );

@@ -18,6 +18,11 @@ export interface Plan {
   sort_order: number;
 }
 
+export interface ExternalLink {
+  label: string;
+  url: string;
+}
+
 export interface OpeningHour {
   day: number;
   open: string;
@@ -43,6 +48,7 @@ export interface Store {
   instagram: string | null;
   facebook: string | null;
   website: string | null;
+  links: ExternalLink[] | null;
   opening_hours: OpeningHour[] | null;
   details: Record<string, unknown>;
   plan_id: PlanId;

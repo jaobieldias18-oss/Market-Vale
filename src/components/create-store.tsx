@@ -1,13 +1,32 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/utils";
-import type { Category } from "@/lib/types";
+import type { Category, PlanId } from "@/lib/types";
+import PlanCards from "@/components/plan-cards";
+import { Check, ArrowRight } from "lucide-react";
 
 export default function CreateStore() {
+  return (
+    <Suspense>
+      <CreateStoreInner />
+    </Suspense>
+  );
+}
+
+function CreateStoreInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [step, setStep] = useState<"planos" | "dados">("planos");
+  const [planid, setPlanId] = useState<PlanId>(
+    searchParams.get("plano") === "profissional" || searchParams.get("plano") === "premium"
+      ? (searchParams.get("plano") as PlanId)
+      : "basico",
+  );
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -52,6 +71,7 @@ export default function CreateStore() {
         owner_id: user.id,
         name,
         slug,
+        plan_id: planid,
         category_id: categoryId || null,
         city: city || null,
         whatsapp: whatsapp || null,
@@ -72,78 +92,151 @@ export default function CreateStore() {
     <div className="mx-auto max-w-2xl px-4 py-10">
       <h1 className="text-2xl font-bold text-slate-900">Cadastre seu negócio</h1>
       <p className="mt-1 text-sm text-slate-500">
-        Comece com o plano Básico grátis e personalize depois.
+        Primeiro escolha o plano, depois preencha os dados da sua loja.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
-        <Field label="Nome do negócio">
-          <input
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ex: Confeitaria Doce Ribeira"
-            className="input"
-          />
-        </Field>
+      <div className="mt-6 flex w-full gap-2 rounded-full border border-slate-200 bg-white p-1.5 shadow-sm">
+        <StepButton
+          active={step === "planos"}
+          onClick={() => setStep("planos")}
+          done={step === "dados"}
+          label="1. Escolha o plano"
+        />
+        <StepButton
+          active={step === "dados"}
+          onClick={() => setStep("dados")}
+          done={false}
+          label="2. Dados da loja"
+        />
+      </div>
 
-        <Field label="Tipo de negócio">
-          <select
-            required
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-            className="input"
-          >
-            <option value="">Selecione...</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.icon} {c.name}
-              </option>
-            ))}
-          </select>
-        </Field>
+      {step === "planos" ? (
+        <div className="mt-8">
+          <PlanCards selected={planid} onSelect={setPlanId} />
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setStep("dados")}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl"
+            >
+              Continuar com o plano {planName(planid)} <ArrowRight className="size-4" />
+            </button>
+            <p className="mt-3 text-xs text-slate-400">
+              Você pode trocar de plano depois, direto no seu painel.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
+          <div className="flex items-center gap-3 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+            <Check className="size-4 shrink-0" />
+            Plano escolhido:{" "}
+            <span className="font-bold">{planName(planid)}</span>
+          </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Cidade">
+          <Field label="Nome do negócio">
             <input
               required
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="Ex: Registro"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ex: Confeitaria Doce Ribeira"
               className="input"
             />
           </Field>
-          <Field label="WhatsApp (com DDD)">
-            <input
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              placeholder="Ex: 13 99999-9999"
+
+          <Field label="Tipo de negócio">
+            <select
+              required
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
               className="input"
+            >
+              <option value="">Selecione...</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.icon} {c.name}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field label="Cidade">
+              <input
+                required
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Ex: Registro"
+                className="input"
+              />
+            </Field>
+            <Field label="WhatsApp (com DDD)">
+              <input
+                value={whatsapp}
+                onChange={(e) => setWhatsapp(e.target.value)}
+                placeholder="Ex: 13 99999-9999"
+                className="input"
+              />
+            </Field>
+          </div>
+
+          <Field label="Descrição">
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4}
+              placeholder="Conte um pouco sobre o seu negócio..."
+              className="input resize-none"
             />
           </Field>
-        </div>
 
-        <Field label="Descrição">
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-            placeholder="Conte um pouco sobre o seu negócio..."
-            className="input resize-none"
-          />
-        </Field>
+          {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
 
-        {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
-        >
-          {loading ? "Criando..." : "Criar minha loja"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
+          >
+            {loading ? "Criando..." : "Criar minha loja"}
+          </button>
+        </form>
+      )}
     </div>
   );
+}
+
+function StepButton({
+  active,
+  done,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  done: boolean;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
+        active ? "bg-emerald-600 text-white shadow" : "text-slate-500 hover:text-slate-800"
+      }`}
+    >
+      {done && <Check className="size-4" />}
+      {label}
+    </button>
+  );
+}
+
+function planName(id: PlanId) {
+  switch (id) {
+    case "profissional":
+      return "Profissional";
+    case "premium":
+      return "Premium";
+    default:
+      return "Básico";
+  }
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {

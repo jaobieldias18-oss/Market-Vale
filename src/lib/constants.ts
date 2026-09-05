@@ -52,6 +52,37 @@ export const FEATURE_LIMITS: Record<
   premium: { gallery: 60, custom_theme: true, details: true, priority: true },
 };
 
+export interface MatrixRow {
+  label: string;
+  plans: PlanId[];
+}
+
+export const PLAN_MATRIX: MatrixRow[] = [
+  { label: "Página pública com link exclusivo", plans: ["basico", "profissional", "premium"] },
+  { label: "Aparece no catálogo Market Vale", plans: ["basico", "profissional", "premium"] },
+  { label: "Perfil completo (contato, endereço, WhatsApp)", plans: ["basico", "profissional", "premium"] },
+  { label: "Links externos (Instagram, iFood, Aiqfome)", plans: ["profissional", "premium"] },
+  { label: "Personalização: cores, fonte e layout", plans: ["profissional", "premium"] },
+  { label: "Galeria de fotos", plans: ["profissional", "premium"] },
+  { label: "Horários de funcionamento", plans: ["profissional", "premium"] },
+  { label: "Destaque nos resultados da categoria", plans: ["profissional", "premium"] },
+  { label: "Cardápio digital (mercados, marmitarias, restaurantes)", plans: ["premium"] },
+  { label: "Estatísticas de visitas", plans: ["premium"] },
+  { label: "Selos Destaque e Premium", plans: ["premium"] },
+  { label: "Suporte prioritário", plans: ["premium"] },
+];
+
+export const SUGGESTED_LINKS = [
+  "Instagram",
+  "Facebook",
+  "WhatsApp",
+  "iFood",
+  "Aiqfome",
+  "Google Maps",
+  "Site próprio",
+  "Cardápio digital",
+];
+
 export const CATEGORIES = [
   "confeitaria",
   "cafeteria",

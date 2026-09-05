@@ -35,7 +35,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard/assinatura" className="transition hover:text-emerald-400">
+              <Link href="/planos" className="transition hover:text-emerald-400">
                 Planos e preços
               </Link>
             </li>

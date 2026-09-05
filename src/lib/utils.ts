@@ -38,6 +38,14 @@ export function mapLink(address: string, city: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
+export function normalizeUrl(url: string): string {
+  const value = url.trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  if (value.includes(".")) return `https://${value}`;
+  return value;
+}
+
 export const DAY_LABELS = [
   "Domingo",
   "Segunda",
