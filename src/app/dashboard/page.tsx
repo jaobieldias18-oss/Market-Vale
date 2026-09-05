@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import CreateStore from "@/components/create-store";
 import { storageUrl, formatDate } from "@/lib/utils";
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -46,7 +47,7 @@ export default async function DashboardPage() {
           <img src={logo} alt={store.name} className="size-16 rounded-2xl object-cover" />
         ) : (
           <span className="grid size-16 place-items-center rounded-2xl bg-emerald-100 text-3xl">
-            {category?.icon ?? "✨"}
+            {category?.icon ?? "âœ¨"}
           </span>
         )}
         <div className="flex-1">
@@ -60,7 +61,7 @@ export default async function DashboardPage() {
           </div>
           <p className="mt-0.5 flex items-center gap-1 text-sm text-slate-500">
             <MapPin className="size-3.5" />
-            {store.city || "Vale do Ribeira"} · {category?.name}
+            {store.city || "Vale do Ribeira"} Â· {category?.name}
           </p>
         </div>
         <a
@@ -83,9 +84,9 @@ export default async function DashboardPage() {
       )}
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        <Stat icon={<Eye className="size-5" />} value={store.views} label="Visitas na página" />
+        <Stat icon={<Eye className="size-5" />} value={store.views} label="Visitas na pÃ¡gina" />
         <Stat icon={<Share2 className="size-5" />} value="Seu link" label="Compartilhe seu site" />
-        <Stat icon={<CreditCard className="size-5" />} value={plan?.name ?? "Básico"} label="Plano atual" />
+        <Stat icon={<CreditCard className="size-5" />} value={plan?.name ?? "BÃ¡sico"} label="Plano atual" />
       </div>
 
       <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
@@ -112,9 +113,9 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        <QuickLink icon={<Share2 className="size-5" />} title="Editar informações" desc="Nome, contatos, endereço" href="/dashboard/configuracao" />
-        <QuickLink icon={<Camera className="size-5" />} title="Gerenciar fotos" desc="Galeria do seu negócio" href="/dashboard/fotos" />
-        <QuickLink icon={<CreditCard className="size-5" />} title="Alterar plano" desc="Básico, Profissional ou Premium" href="/dashboard/assinatura" />
+        <QuickLink icon={<Share2 className="size-5" />} title="Editar informaÃ§Ãµes" desc="Nome, contatos, endereÃ§o" href="/dashboard/configuracao" />
+        <QuickLink icon={<Camera className="size-5" />} title="Gerenciar fotos" desc="Galeria do seu negÃ³cio" href="/dashboard/fotos" />
+        <QuickLink icon={<CreditCard className="size-5" />} title="Alterar plano" desc="BÃ¡sico, Profissional ou Premium" href="/dashboard/assinatura" />
       </div>
     </div>
   );

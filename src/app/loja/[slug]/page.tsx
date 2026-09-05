@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import StorePage from "@/components/store-page";
 import type { Category, Store, StoreGalleryItem } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export async function generateMetadata({
   params,
@@ -15,8 +16,8 @@ export async function generateMetadata({
   const supabase = await createClient();
   const { data } = await supabase.from("stores").select("name, description").eq("slug", slug).maybeSingle();
   return {
-    title: data ? data.name : "Negócio",
-    description: data?.description ?? "Negócio do Vale do Ribeira",
+    title: data ? data.name : "NegÃ³cio",
+    description: data?.description ?? "NegÃ³cio do Vale do Ribeira",
   };
 }
 

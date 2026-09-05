@@ -1,9 +1,10 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Navbar from "@/components/navbar";
 import AdminNav from "@/components/admin-nav";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function AdminLayout({
   children,

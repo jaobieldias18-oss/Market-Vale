@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getOrCreatePrice, hasStripe } from "@/lib/stripe";
 import type { PlanId } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 const VALID_PLANS: PlanId[] = ["basico", "profissional", "premium"];
 
@@ -13,13 +14,13 @@ export async function POST(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Faça login para assinar." }, { status: 401 });
+    return NextResponse.json({ error: "FaÃ§a login para assinar." }, { status: 401 });
   }
 
   const body = (await request.json().catch(() => ({}))) as { plan_id?: string };
   const planId = body.plan_id;
   if (!planId || !VALID_PLANS.includes(planId as PlanId)) {
-    return NextResponse.json({ error: "Plano inválido." }, { status: 400 });
+    return NextResponse.json({ error: "Plano invÃ¡lido." }, { status: 400 });
   }
 
   const { data: store } = await supabase
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
   const origin = new URL(request.url).origin;
   const priceId = await getOrCreatePrice(planId as PlanId);
   if (!priceId) {
-    return NextResponse.json({ error: "Não foi possível criar o preço do plano." }, { status: 500 });
+    return NextResponse.json({ error: "NÃ£o foi possÃ­vel criar o preÃ§o do plano." }, { status: 500 });
   }
 
   let customer: string | undefined;

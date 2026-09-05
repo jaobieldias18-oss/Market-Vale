@@ -1,9 +1,10 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import GalleryManager from "@/components/gallery-manager";
 import type { Store, StoreGalleryItem } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function FotosPage() {
   const supabase = await createClient();

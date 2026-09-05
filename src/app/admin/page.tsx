@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -37,13 +37,13 @@ export default function AdminOverview() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-2xl font-bold text-slate-900">Visão geral</h1>
+      <h1 className="text-2xl font-bold text-slate-900">VisÃ£o geral</h1>
       <p className="mt-1 text-sm text-slate-500">Painel do administrador do Market Vale</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat icon={<Building2 className="size-5" />} value={stores.length} label={`Lojas cadastradas (${active.length} ativas)`} color="emerald" />
         <Stat icon={<Eye className="size-5" />} value={totalViews} label="Visitas totais" color="sky" />
-        <Stat icon={<Users className="size-5" />} value={userCount} label="Usuários cadastrados" color="violet" />
+        <Stat icon={<Users className="size-5" />} value={userCount} label="UsuÃ¡rios cadastrados" color="violet" />
         <Stat icon={<CreditCard className="size-5" />} value={`R$ ${totalMonthly.toFixed(2).replace(".", ",")}`} label="Receita mensal estimada" color="amber" />
       </div>
 
@@ -51,7 +51,7 @@ export default function AdminOverview() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="font-semibold text-slate-800">Planos</h2>
           <ul className="mt-4 space-y-2 text-sm text-slate-600">
-            <li className="flex justify-between"><span>Básico</span><span className="font-semibold">{planCount.basico}</span></li>
+            <li className="flex justify-between"><span>BÃ¡sico</span><span className="font-semibold">{planCount.basico}</span></li>
             <li className="flex justify-between"><span>Profissional</span><span className="font-semibold">{planCount.profissional}</span></li>
             <li className="flex justify-between"><span>Premium</span><span className="font-semibold">{planCount.premium}</span></li>
           </ul>
@@ -69,8 +69,8 @@ export default function AdminOverview() {
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <MiniLink href="/admin/lojas" label="Lojas em destaque" value={featured} />
             <MiniLink href="/admin/categorias" label="Gerenciar categorias" value="Abrir" />
-            <MiniLink href="/admin/planos" label="Ajustar preços dos planos" value="Abrir" />
-            <MiniLink href="/admin/usuarios" label="Gerenciar usuários" value="Abrir" />
+            <MiniLink href="/admin/planos" label="Ajustar preÃ§os dos planos" value="Abrir" />
+            <MiniLink href="/admin/usuarios" label="Gerenciar usuÃ¡rios" value="Abrir" />
           </div>
         </div>
       </div>
@@ -123,3 +123,4 @@ function Loading() {
     </div>
   );
 }
+export const runtime = "edge";

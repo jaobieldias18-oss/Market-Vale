@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -50,7 +50,7 @@ export default function AdminPlanos() {
     if (!row) return;
     const price = parseFloat(row.price.replace(",", "."));
     if (isNaN(price)) {
-      setMsg("Preço inválido.");
+      setMsg("PreÃ§o invÃ¡lido.");
       return;
     }
     const features = row.features
@@ -72,7 +72,7 @@ export default function AdminPlanos() {
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-2xl font-bold text-slate-900">Planos</h1>
       <p className="mt-1 text-sm text-slate-500">
-        Preços em reais por mês. Cada recurso em uma linha.
+        PreÃ§os em reais por mÃªs. Cada recurso em uma linha.
       </p>
 
       {msg && (
@@ -94,7 +94,7 @@ export default function AdminPlanos() {
                     onChange={(e) => patch(plan.id, "price", e.target.value)}
                     inputMode="decimal"
                   />
-                  /mês
+                  /mÃªs
                 </label>
                 <button
                   onClick={() => save(plan.id)}
@@ -116,3 +116,4 @@ export default function AdminPlanos() {
     </div>
   );
 }
+export const runtime = "edge";
