@@ -18,7 +18,7 @@ export const PLANS: Plan[] = [
   {
     id: "profissional",
     name: "Profissional",
-    price_monthly: 49.9,
+    price_monthly: 49.99,
     features: [
       "Tudo do plano Básico",
       "Personalização completa: cores, fonte e capa",
@@ -32,7 +32,7 @@ export const PLANS: Plan[] = [
   {
     id: "premium",
     name: "Premium",
-    price_monthly: 99.9,
+    price_monthly: 99.99,
     features: [
       "Tudo do plano Profissional",
       "Cardápio digital (para mercados, marmitarias e restaurantes)",
