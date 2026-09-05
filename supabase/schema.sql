@@ -99,9 +99,15 @@ create table if not exists public.subscriptions (
   plan_id text not null references public.plans(id),
   status text not null default 'active' check (status in ('pending', 'active', 'canceled')),
   provider text not null default 'manual',
+  stripe_customer_id text,
+  stripe_subscription_id text,
   started_at timestamptz not null default now(),
   renews_at timestamptz
 );
+
+create unique index if not exists subscriptions_stripe_subscription_key
+  on public.subscriptions(stripe_subscription_id)
+  where stripe_subscription_id is not null;
 
 -- ------------------------------------------------------------
 -- GALERIA DE FOTOS
