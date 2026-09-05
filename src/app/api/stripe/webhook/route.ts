@@ -1,8 +1,64 @@
 import { NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, resolvePlanFromSubscription, renewsAtFromSubscription } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
+
+const encoder = new TextEncoder();
+
+function toHex(bytes: Uint8Array): string {
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function verifyWebhookSignature(
+  body: string,
+  signature: string,
+  secret: string,
+): Promise<Stripe.Event | null> {
+  const parts = signature.split(",");
+  const timestamp = parts.find((p) => p.startsWith("t="))?.slice(2);
+  const signatureHex = parts.find((p) => p.startsWith("v1="))?.slice(3);
+  if (!timestamp || !signatureHex) return null;
+
+  const tolerance = 300;
+  const now = Math.floor(Date.now() / 1000);
+  if (Math.abs(now - Number(timestamp)) > tolerance) return null;
+
+  const cryptoImpl = globalThis.crypto;
+  if (!cryptoImpl?.subtle) return null;
+
+  try {
+    const key = await cryptoImpl.subtle.importKey(
+      "raw",
+      encoder.encode(secret),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"],
+    );
+    const mac = await cryptoImpl.subtle.sign(
+      "HMAC",
+      key,
+      encoder.encode(`${timestamp}.${body}`),
+    );
+    const expected = toHex(new Uint8Array(mac));
+
+    if (expected.length === signatureHex.length) {
+      let diff = 0;
+      for (let i = 0; i < expected.length; i++) {
+        diff |= expected.charCodeAt(i) ^ signatureHex.charCodeAt(i);
+      }
+      if (diff === 0) {
+        return JSON.parse(body) as Stripe.Event;
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
 
 export async function POST(request: NextRequest) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -15,12 +71,10 @@ export async function POST(request: NextRequest) {
 
   const client = stripe();
   const body = await request.text();
-  const signature = request.headers.get("stripe-signature");
+  const signature = request.headers.get("stripe-signature") ?? "";
 
-  let event;
-  try {
-    event = client.webhooks.constructEvent(body, signature ?? "", secret);
-  } catch {
+  const event = await verifyWebhookSignature(body, signature, secret);
+  if (!event) {
     return NextResponse.json({ error: "Falha na verificação da assinatura do webhook." }, { status: 400 });
   }
 
