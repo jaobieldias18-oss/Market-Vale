@@ -27,7 +27,7 @@ export default function AdminLojas() {
 
   if (loading) return <Loading />;
 
-  const catName = (id: string | null) => categories.find((c) => c.id === id)?.name ?? "â€”";
+  const catName = (id: string | null) => categories.find((c) => c.id === id)?.name ?? "—";
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -52,7 +52,7 @@ export default function AdminLojas() {
               <tr key={store.id} className="hover:bg-slate-50">
                 <td className="px-4 py-3">
                   <div className="font-medium text-slate-800">{store.name}</div>
-                  <div className="text-xs text-slate-400">{store.city || "â€”"}</div>
+                  <div className="text-xs text-slate-400">{store.city || "—"}</div>
                 </td>
                 <td className="px-4 py-3 text-slate-600">{catName(store.category_id)}</td>
                 <td className="px-4 py-3">
@@ -89,15 +89,40 @@ export default function AdminLojas() {
 }
 
 function PlanSelect({ store, onChange }: { store: Store; onChange: () => void }) {
+  const [saving, setSaving] = useState(false);
   async function handle(value: string) {
+    if (value === store.plan_id) return;
+    setSaving(true);
     const supabase = createClient();
+    const { error } = await supabase
+      .from("subscriptions")
+      .update({ plan_id: value, status: "active", provider: "manual" })
+      .eq("store_id", store.id)
+      .eq("status", "active");
+    if (!error) {
+      const { count } = await supabase
+        .from("subscriptions")
+        .select("id", { count: "exact", head: true })
+        .eq("store_id", store.id)
+        .eq("status", "active");
+      if (count === 0) {
+        await supabase.from("subscriptions").insert({
+          store_id: store.id,
+          plan_id: value,
+          status: "active",
+          provider: "manual",
+        });
+      }
+    }
     await supabase.from("stores").update({ plan_id: value }).eq("id", store.id);
+    setSaving(false);
     onChange();
   }
   return (
     <select
       value={store.plan_id}
       onChange={(e) => handle(e.target.value)}
+      disabled={saving}
       className="input !w-32 !py-1.5 text-xs"
     >
       <option value="basico">Básico</option>
