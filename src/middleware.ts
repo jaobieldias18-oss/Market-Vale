@@ -3,7 +3,25 @@ import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
   try {
-    return await updateSession(request);
+    const res = await updateSession(request);
+    const debug = res as NextResponse;
+    debug.headers.set(
+      "x-dbg-url",
+      process.env.NEXT_PUBLIC_SUPABASE_URL ? "ok" : "FALTANDO",
+    );
+    debug.headers.set(
+      "x-dbg-anon",
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "ok" : "FALTANDO",
+    );
+    debug.headers.set(
+      "x-dbg-svc",
+      process.env.SUPABASE_SERVICE_ROLE_KEY ? "ok" : "FALTANDO",
+    );
+    debug.headers.set(
+      "x-dbg-stripe",
+      process.env.STRIPE_SECRET_KEY ? "ok" : "FALTANDO",
+    );
+    return debug;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const stack =
