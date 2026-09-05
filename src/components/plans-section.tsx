@@ -44,7 +44,7 @@ export default function PlansSection({ store, plans }: { store: Store; plans: Pl
       <div className="text-center">
         <h1 className="text-3xl font-bold text-slate-900">Escolha o plano ideal</h1>
         <p className="mx-auto mt-2 max-w-xl text-slate-500">
-          Comece grátis e faça upgrade quando quiser para personalizar ainda mais o seu site.
+          Escolha o plano que combina com o seu negócio e faça upgrade quando quiser.
         </p>
       </div>
 
@@ -74,14 +74,8 @@ export default function PlansSection({ store, plans }: { store: Store; plans: Pl
               )}
               <h2 className="text-xl font-bold">{plan.name}</h2>
               <p className="mt-2 text-3xl font-extrabold">
-                {price === 0 ? (
-                  "Grátis"
-                ) : (
-                  <>
-                    {formatPrice(price)}
-                    <span className="text-sm font-medium">/mês</span>
-                  </>
-                )}
+                {formatPrice(price)}
+                <span className="text-sm font-medium">/mês</span>
               </p>
               <ul className="mt-6 flex-1 space-y-2.5 text-sm">
                 {(plan.features as string[]).map((feature) => (

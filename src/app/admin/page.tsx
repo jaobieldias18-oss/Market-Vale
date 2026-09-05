@@ -51,7 +51,7 @@ export default function AdminOverview() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="font-semibold text-slate-800">Planos</h2>
           <ul className="mt-4 space-y-2 text-sm text-slate-600">
-            <li className="flex justify-between"><span>Básico (grátis)</span><span className="font-semibold">{planCount.basico}</span></li>
+            <li className="flex justify-between"><span>Básico</span><span className="font-semibold">{planCount.basico}</span></li>
             <li className="flex justify-between"><span>Profissional</span><span className="font-semibold">{planCount.profissional}</span></li>
             <li className="flex justify-between"><span>Premium</span><span className="font-semibold">{planCount.premium}</span></li>
           </ul>

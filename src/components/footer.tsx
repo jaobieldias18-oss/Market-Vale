@@ -26,7 +26,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             <li>
               <Link href="/cadastro" className="transition hover:text-emerald-400">
-                Crie sua loja grátis
+                Crie sua loja
               </Link>
             </li>
             <li>

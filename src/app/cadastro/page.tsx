@@ -52,11 +52,11 @@ export default function CadastroPage() {
           <Store className="size-6" />
         </span>
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900">
-          Crie sua loja grátis
+          Crie sua loja
         </h1>
         <p className="mt-2 max-w-xl text-slate-500">
-          Escolha o plano que faz sentido para o seu negócio. Você pode começar
-          grátis e fazer upgrade quando quiser.
+          Escolha o plano que faz sentido para o seu negócio. Você pode
+          começar pelo Básico e fazer upgrade quando quiser.
         </p>
       </div>
 

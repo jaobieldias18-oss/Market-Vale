@@ -80,7 +80,7 @@ function LoginForm() {
         <p className="mt-6 text-center text-sm text-slate-500">
           Ainda não tem conta?{" "}
           <Link href="/cadastro" className="font-medium text-emerald-600 hover:underline">
-            Cadastre-se grátis
+            Cadastre-se
           </Link>
         </p>
       </div>

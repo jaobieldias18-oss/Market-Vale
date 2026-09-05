@@ -81,14 +81,8 @@ export default function PlanCards({
                 )}
               </div>
               <p className={`mt-2 text-3xl font-extrabold tracking-tight ${highlightLabel}`}>
-                {price === 0 ? (
-                  "Grátis"
-                ) : (
-                  <>
-                    {formatPrice(price)}
-                    <span className={`text-sm font-medium ${highlightLabel}`}>/mês</span>
-                  </>
-                )}
+                {formatPrice(price)}
+                <span className={`text-sm font-medium ${highlightLabel}`}>/mês</span>
               </p>
               <ul className="mt-5 flex-1 space-y-2.5 text-sm">
                 {(plan.features as string[]).map((feature) => (
@@ -118,7 +112,7 @@ export default function PlanCards({
                         : "bg-white text-emerald-700 hover:bg-emerald-50"
                   }`}
                 >
-                  {plan.id === "basico" ? "Comece grátis" : `Quero ${plan.name}`}
+                  {plan.id === "basico" ? "Escolher Básico" : `Escolher ${plan.name}`}
                 </span>
               )}
             </Clickable>

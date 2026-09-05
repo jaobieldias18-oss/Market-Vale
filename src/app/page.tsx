@@ -102,7 +102,7 @@ export default async function HomePage() {
 
           <p className="animate-fade-up mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
             Encontre confeitarias, cafeterias, advocacia, mercados e muito mais.
-            E se você é lojista, crie o seu site grátis em minutos.
+            E se você é lojista, crie o seu site em minutos.
           </p>
 
           <div className="animate-fade-up mx-auto mt-10 max-w-2xl">
@@ -114,7 +114,7 @@ export default async function HomePage() {
               href="/cadastro"
               className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:shadow-emerald-500/40"
             >
-              Cadastre minha loja grátis
+              Cadastre minha loja
               <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
             </Link>
             <Link

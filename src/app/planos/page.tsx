@@ -23,7 +23,7 @@ export default function PlanosPage() {
             Escolha o plano ideal para o seu negócio
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-slate-600">
-            Comece grátis e faça upgrade quando precisar. Todos os planos têm
+            Comece pelo plano que faz sentido para o seu negócio. Todos os planos têm
             página pública e aparecem no catálogo do Market Vale.
           </p>
         </div>

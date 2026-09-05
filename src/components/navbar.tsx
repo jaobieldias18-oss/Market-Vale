@@ -115,7 +115,7 @@ export default function Navbar() {
                 href="/cadastro"
                 className="rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition hover:shadow-lg hover:shadow-emerald-500/30"
               >
-                Criar loja grátis
+                Criar loja
               </Link>
             </>
           )}
@@ -200,7 +200,7 @@ export default function Navbar() {
                   onClick={() => setOpen(false)}
                   className="mt-1 block rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2.5 text-center text-sm font-semibold text-white"
                 >
-                  Criar loja grátis
+                  Criar loja
                 </Link>
               </>
             )}

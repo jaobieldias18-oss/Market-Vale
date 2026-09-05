@@ -4,9 +4,9 @@ export const PLANS: Plan[] = [
   {
     id: "basico",
     name: "Básico",
-    price_monthly: 0,
+    price_monthly: 30,
     features: [
-      "Página pública gratuita com link exclusivo",
+      "Página pública com link exclusivo",
       "Perfil completo (descrição, contato, endereço, WhatsApp)",
       "Aparece no catálogo Market Vale",
       "1 categoria de negócio",
