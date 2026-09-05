@@ -30,6 +30,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local downloads
+/Market-Vale-main/
+/Market-Vale.zip
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
