@@ -135,17 +135,3 @@ body {
 .marquee-paused:hover .animate-marquee {
   animation-play-state: paused;
 }
-
-@keyframes bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@utility animate-bob {
-  animation: bob 6s ease-in-out infinite;
-}

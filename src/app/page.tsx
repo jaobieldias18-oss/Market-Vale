@@ -4,6 +4,16 @@ import Footer from "@/components/footer";
 import CategoryCard from "@/components/category-card";
 import StoreCard from "@/components/store-card";
 import RiverWave from "@/components/river-wave";
+import {
+  BananaMark,
+  RiverMark,
+  TreeMark,
+  FishMark,
+  CaveMark,
+  PalmMark,
+  BasketMark,
+  ValeScene,
+} from "@/components/illustrations";
 import { CATEGORIES as defaultCategorySlugs, CATEGORY_FIELDS } from "@/lib/constants";
 import type { Category, Store } from "@/lib/types";
 import {
@@ -100,61 +110,54 @@ export default async function HomePage() {
       <Navbar />
 
       <section className="mesh-bg relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0">
-          <span className="animate-bob absolute left-[6%] top-[18%] text-5xl opacity-25 md:text-7xl" style={{ rotate: "-12deg" }}>
-            🍌
-          </span>
-          <span className="animate-bob absolute right-[8%] top-[14%] text-4xl opacity-25 md:text-6xl" style={{ rotate: "10deg", animationDelay: "1.2s" }}>
-            🍌
-          </span>
-          <span className="animate-bob absolute right-[20%] bottom-[34%] hidden text-5xl opacity-15 md:block" style={{ rotate: "8deg", animationDelay: "2.4s" }}>
-            🌊
-          </span>
-          <span className="animate-bob absolute left-[16%] bottom-[28%] text-4xl opacity-15 md:text-5xl" style={{ rotate: "-8deg", animationDelay: "0.6s" }}>
-            🌊
-          </span>
-        </div>
+        <div className="mx-auto max-w-6xl px-4 pb-24 pt-20 md:pt-24">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="text-center lg:text-left">
+              <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-amber-200/90 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-700 shadow-sm backdrop-blur">
+                <MapPin className="size-3.5 text-emerald-600" />
+                Vale do Ribeira · São Paulo
+              </span>
 
-        <div className="mx-auto max-w-6xl px-4 pb-24 pt-20 text-center md:pt-24">
-          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-amber-200/90 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-700 shadow-sm backdrop-blur">
-            <MapPin className="size-3.5 text-emerald-600" />
-            Vale do Ribeira · São Paulo
-          </span>
+              <h1 className="animate-fade-up mx-auto mt-6 max-w-2xl text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 md:text-5xl lg:mx-0 xl:text-6xl">
+                Do rio às bananas, os negócios do Vale{" "}
+                <span className="gradient-text">em um só lugar</span>
+              </h1>
 
-          <h1 className="animate-fade-up mx-auto mt-6 max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 md:text-6xl">
-            Do rio às bananas, os negócios do Vale{" "}
-            <span className="gradient-text">em um só lugar</span>
-          </h1>
+              <p className="animate-fade-up mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 lg:mx-0">
+                De mercados e confeitarias às lojas e serviços que fazem a
+                região girar — das margens do Ribeira aos campos de banana.
+              </p>
 
-          <p className="animate-fade-up mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            De mercados e confeitarias às lojas e serviços que fazem a região
-            girar — das margens do Ribeira aos campos de banana.
-          </p>
+              <div className="animate-fade-up mx-auto mt-8 max-w-xl lg:mx-0">
+                <SearchBar />
+              </div>
 
-          <div className="animate-fade-up mx-auto mt-10 max-w-2xl">
-            <SearchBar />
-          </div>
+              <div className="animate-fade-up mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
+                <Link
+                  href="/cadastro"
+                  className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:shadow-emerald-500/40"
+                >
+                  Cadastre minha loja
+                  <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
+                </Link>
+                <Link
+                  href="/#categorias"
+                  className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:border-emerald-300 hover:text-emerald-700"
+                >
+                  Explorar negócios
+                </Link>
+              </div>
 
-          <div className="animate-fade-up mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/cadastro"
-              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:shadow-emerald-500/40"
-            >
-              Cadastre minha loja
-              <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/#categorias"
-              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:border-emerald-300 hover:text-emerald-700"
-            >
-              Explorar negócios
-            </Link>
-          </div>
+              <div className="animate-fade-up mx-auto mt-10 grid max-w-xl grid-cols-3 gap-4 lg:mx-0">
+                <HeroStat value={String(totalStores)} label="negócios cadastrados" />
+                <HeroStat value={String(categories.length)} label="categorias" />
+                <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da região" />
+              </div>
+            </div>
 
-          <div className="animate-fade-up mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-4">
-            <HeroStat value={String(totalStores)} label="negócios cadastrados" />
-            <HeroStat value={String(categories.length)} label="categorias" />
-            <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da região" />
+            <div className="animate-fade-up mt-6 hidden lg:block">
+              <ValeScene />
+            </div>
           </div>
         </div>
 
@@ -163,22 +166,22 @@ export default async function HomePage() {
 
       <section className="marquee-paused overflow-hidden border-y border-emerald-900/60 bg-gradient-to-r from-emerald-950 via-teal-950 to-cyan-950 py-3">
         <div className="flex w-max animate-marquee items-center gap-8 whitespace-nowrap text-sm font-medium text-emerald-100">
-          <RegionPill text="Capital da Banana 🍌" />
-          <RegionPill text="Rio Ribeira de Iguape 🌊" />
-          <RegionPill text="Camarão de Iguape 🦐" />
-          <RegionPill text="Palmito do Vale 🌴" />
-          <RegionPill text="Cavernas do Diabo ⛰️" />
-          <RegionPill text="Mata Atlântica preservada 🌳" />
-          <RegionPill text="Farinha de banana 🍞" />
-          <RegionPill text="Pescado do Ribeira 🐟" />
-          <RegionPill text="Capital da Banana 🍌" />
-          <RegionPill text="Rio Ribeira de Iguape 🌊" />
-          <RegionPill text="Camarão de Iguape 🦐" />
-          <RegionPill text="Palmito do Vale 🌴" />
-          <RegionPill text="Cavernas do Diabo ⛰️" />
-          <RegionPill text="Mata Atlântica preservada 🌳" />
-          <RegionPill text="Farinha de banana 🍞" />
-          <RegionPill text="Pescado do Ribeira 🐟" />
+          <RegionPill icon={<BananaMark size={18} />} text="Capital da Banana" />
+          <RegionPill icon={<RiverMark size={18} />} text="Rio Ribeira de Iguape" />
+          <RegionPill icon={<FishMark size={18} />} text="Camarão de Iguape" />
+          <RegionPill icon={<PalmMark size={18} />} text="Palmito do Vale" />
+          <RegionPill icon={<CaveMark size={18} />} text="Cavernas do Diabo" />
+          <RegionPill icon={<TreeMark size={18} />} text="Mata Atlântica preservada" />
+          <RegionPill icon={<BananaMark size={18} />} text="Farinha e banana-passa" />
+          <RegionPill icon={<FishMark size={18} />} text="Pescado do Ribeira" />
+          <RegionPill icon={<BananaMark size={18} />} text="Capital da Banana" />
+          <RegionPill icon={<RiverMark size={18} />} text="Rio Ribeira de Iguape" />
+          <RegionPill icon={<FishMark size={18} />} text="Camarão de Iguape" />
+          <RegionPill icon={<PalmMark size={18} />} text="Palmito do Vale" />
+          <RegionPill icon={<CaveMark size={18} />} text="Cavernas do Diabo" />
+          <RegionPill icon={<TreeMark size={18} />} text="Mata Atlântica preservada" />
+          <RegionPill icon={<BananaMark size={18} />} text="Farinha e banana-passa" />
+          <RegionPill icon={<FishMark size={18} />} text="Pescado do Ribeira" />
         </div>
       </section>
 
@@ -271,22 +274,22 @@ export default async function HomePage() {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <IdentityCard
-            emoji="🍌"
+            icon={<BananaMark size={30} />}
             title="Capital da Banana"
             text="A maior produção do Vale abastece o país. Banana aqui é cultura, renda e tradição de gerações."
           />
           <IdentityCard
-            emoji="🌊"
+            icon={<RiverMark size={30} />}
             title="Rio Ribeira de Iguape"
             text="O rio de águas cristalinas que cruza a região e dá nome ao nosso Vale."
           />
           <IdentityCard
-            emoji="🌳"
+            icon={<TreeMark size={30} />}
             title="Mata Atlântica viva"
             text="O maior remanescente preservado do país, com cavernas, quedas e rios de beleza rara."
           />
           <IdentityCard
-            emoji="🤝"
+            icon={<BasketMark size={30} />}
             title="Quem sabe vai longe"
             text="Quem produz no Vale encontra quem consome no Vale — tudo conectado em um só lugar."
           />
@@ -394,27 +397,28 @@ function Step({
   );
 }
 
-function RegionPill({ text }: { text: string }) {
+function RegionPill({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
     <span className="flex items-center gap-2 rounded-full border border-emerald-800/60 bg-emerald-900/40 px-5 py-1.5 text-emerald-100">
+      {icon}
       {text}
     </span>
   );
 }
 
 function IdentityCard({
-  emoji,
+  icon,
   title,
   text,
 }: {
-  emoji: string;
+  icon: React.ReactNode;
   title: string;
   text: string;
 }) {
   return (
     <div className="card card-hover p-6">
-      <div className="grid size-14 place-items-center rounded-2xl border border-emerald-100 bg-emerald-50 text-3xl">
-        {emoji}
+      <div className="grid size-16 place-items-center rounded-2xl border border-emerald-100 bg-emerald-50">
+        {icon}
       </div>
       <h3 className="mt-4 text-lg font-bold tracking-tight text-slate-900">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-600">{text}</p>
