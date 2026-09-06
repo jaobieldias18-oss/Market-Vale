@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   },
   description:
     "O Vale do Ribeira conectado em um só lugar. Encontre confeitarias, cafeterias, advocacia, mercados, lojas e muito mais na sua região.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Store } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -35,8 +34,9 @@ function LoginForm() {
     <div className="mx-auto mt-16 max-w-md px-4">
       <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
         <div className="flex flex-col items-center">
-          <span className="grid size-12 place-items-center rounded-xl bg-emerald-600 text-white">
-            <Store className="size-6" />
+          <span className="grid size-14 place-items-center overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Market Vale" className="size-14 rounded-full object-cover" />
           </span>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">Entrar</h1>
           <p className="mt-1 text-sm text-slate-500">Acesse seu painel de lojista</p>

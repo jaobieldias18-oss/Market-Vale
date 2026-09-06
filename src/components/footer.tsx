@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Store } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -7,11 +6,9 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-3">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/25">
-              <Store className="size-5" />
-            </span>
-            <span className="text-lg font-extrabold tracking-tight text-white">
-              Market<span className="gradient-text">Vale</span>
+            <span className="grid size-10 place-items-center overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="Market Vale" className="size-10 rounded-full object-cover" />
             </span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-500">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Store, Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import PlanCards from "@/components/plan-cards";
 import type { PlanId } from "@/lib/types";
 
@@ -48,8 +48,9 @@ export default function CadastroPage() {
   return (
     <div className="mx-auto mt-10 max-w-5xl px-4">
       <div className="flex flex-col items-center text-center">
-        <span className="grid size-12 place-items-center rounded-xl bg-emerald-600 text-white">
-          <Store className="size-6" />
+        <span className="grid size-16 place-items-center overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Market Vale" className="size-16 rounded-full object-cover" />
         </span>
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900">
           Crie sua loja

@@ -1,0 +1,60 @@
+
+> market-vale@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.25
+   - Local:        http://localhost:3000
+   - Network:      http://26.71.214.230:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1976ms
+ ✓ Compiled /middleware in 406ms (171 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 1650ms (1165 modules)
+ GET / 200 in 3229ms
+ GET / 200 in 818ms
+ ○ Compiling /planos ...
+ ✓ Compiled /planos in 3.8s (762 modules)
+ ✓ Compiled in 703ms (312 modules)
+ GET /planos 200 in 4547ms
+ GET /planos 200 in 103ms
+ GET /planos 200 in 38ms
+ GET /planos 200 in 41ms
+ GET / 200 in 1132ms
+ GET /planos 200 in 53ms
+ GET / 200 in 1042ms
+ GET / 200 in 682ms
+ GET /planos 200 in 39ms
+ GET /planos 200 in 325ms
+ GET /planos 200 in 105ms
+ GET /planos 200 in 118ms
+ GET /planos 200 in 140ms
+ GET /planos 200 in 146ms
+ GET /planos 200 in 147ms
+ GET /planos 200 in 163ms
+ GET /planos 200 in 146ms
+ GET / 200 in 810ms
+ GET /planos 200 in 370ms
+ GET /planos 200 in 167ms
+ GET /planos 200 in 164ms
+ GET /planos 200 in 207ms
+ GET /planos 200 in 161ms
+ GET /planos 200 in 223ms
+ GET /planos 200 in 152ms
+ GET /planos 200 in 167ms
+ GET /planos 200 in 150ms
+ GET /planos 200 in 149ms
+ GET / 200 in 95ms
+ GET / 200 in 29ms
+ GET /planos 200 in 161ms
+ GET /planos 200 in 177ms
+ GET / 200 in 796ms
+ GET / 200 in 887ms
+ ✓ Compiled in 1040ms (1633 modules)
+ ✓ Compiled in 413ms (1619 modules)
+ ✓ Compiled in 136ms (311 modules)
+ ✓ Compiled in 120ms (311 modules)
+ ✓ Compiled in 447ms (1617 modules)
+ ✓ Compiled in 471ms (1617 modules)
+ ✓ Compiled in 136ms (311 modules)

@@ -57,11 +57,9 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="group flex items-center gap-2.5">
-          <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/25 transition group-hover:scale-105">
-            <Store className="size-5" />
-          </span>
-          <span className="text-lg font-extrabold tracking-tight text-slate-900">
-            Market<span className="gradient-text">Vale</span>
+          <span className="grid size-10 place-items-center overflow-hidden transition group-hover:scale-105">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Market Vale" className="size-10 rounded-full object-cover" />
           </span>
         </Link>
 
