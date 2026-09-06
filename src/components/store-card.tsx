@@ -15,9 +15,9 @@ export default function StoreCard({
   return (
     <Link
       href={`/loja/${store.slug}`}
-      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-lg hover:shadow-slate-900/5"
+      className="group overflow-hidden rounded-2xl border border-emerald-200/60 bg-white transition hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-900/10"
     >
-      <div className="relative h-40 overflow-hidden bg-slate-100">
+      <div className="relative h-40 overflow-hidden bg-emerald-50">
         {cover ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -42,9 +42,9 @@ export default function StoreCard({
 
       <div className="p-5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="truncate font-bold tracking-tight text-slate-900 transition group-hover:text-emerald-700">
-            {store.name}
-          </h3>
+<h3 className="truncate font-bold tracking-tight text-emerald-950 transition group-hover:text-emerald-700">
+          {store.name}
+        </h3>
         </div>
         <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
           <MapPin className="size-3.5 text-emerald-500" />
@@ -54,7 +54,7 @@ export default function StoreCard({
         {store.description && (
           <p className="mt-2 line-clamp-2 text-sm text-slate-600">{store.description}</p>
         )}
-        <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-emerald-600 opacity-0 transition group-hover:opacity-100">
+        <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-amber-600 opacity-0 transition group-hover:opacity-100">
           Ver site <ArrowUpRight className="size-4" />
         </div>
       </div>

@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f9f8;
-  --foreground: #0f172a;
-  --accent: #059669;
+  --background: #faf7ef;
+  --foreground: #12332a;
+  --accent: #b47609;
 }
 
 @theme inline {
@@ -27,7 +27,7 @@ body {
 }
 
 ::selection {
-  background: #059669;
+  background: #d97706;
   color: #fff;
 }
 
@@ -64,23 +64,23 @@ body {
   color: #94a3b8;
 }
 .input:focus {
-  border-color: #059669;
-  box-shadow: 0 0 0 3px rgb(5 150 105 / 0.14);
+  border-color: #d97706;
+  box-shadow: 0 0 0 3px rgb(217 119 6 / 0.16);
 }
 
 /* ---------- Foco padrão ---------- */
 :focus-visible {
-  outline: 2px solid rgb(5 150 105 / 0.6);
+  outline: 2px solid rgb(217 119 6 / 0.7);
   outline-offset: 2px;
 }
 
 /* ---------- Utilidades ---------- */
 @utility mesh-bg {
   background-image:
-    radial-gradient(at 20% 12%, rgb(5 150 105 / 0.1) 0px, transparent 42%),
-    radial-gradient(at 82% 8%, rgb(14 165 233 / 0.08) 0px, transparent 38%),
-    radial-gradient(at 78% 88%, rgb(251 191 36 / 0.09) 0px, transparent 40%),
-    radial-gradient(at 4% 84%, rgb(5 150 105 / 0.08) 0px, transparent 42%);
+    radial-gradient(at 20% 12%, rgb(5 150 105 / 0.16) 0px, transparent 42%),
+    radial-gradient(at 82% 8%, rgb(217 119 6 / 0.14) 0px, transparent 38%),
+    radial-gradient(at 78% 88%, rgb(180 118 9 / 0.12) 0px, transparent 40%),
+    radial-gradient(at 4% 84%, rgb(4 120 87 / 0.14) 0px, transparent 42%);
 }
 
 @utility glass {
@@ -97,7 +97,7 @@ body {
 }
 
 @utility gradient-text {
-  background: linear-gradient(100deg, #059669, #0d9488 55%, #0284c7);
+  background: linear-gradient(100deg, #047857, #d97706 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

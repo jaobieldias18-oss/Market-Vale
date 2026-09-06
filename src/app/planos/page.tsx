@@ -16,10 +16,10 @@ export default function PlanosPage() {
       <Navbar />
       <section className="mx-auto max-w-6xl px-4 pb-20 pt-14">
         <div className="text-center">
-          <p className="flex items-center justify-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-emerald-600">
+          <p className="flex items-center justify-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-amber-600">
             <Sparkles className="size-4" /> Preços simples, sem fidelidade
           </p>
-          <h1 className="mx-auto mt-2 max-w-2xl text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+          <h1 className="mx-auto mt-2 max-w-2xl text-3xl font-extrabold tracking-tight text-emerald-950 md:text-5xl">
             Escolha o plano ideal para o seu negócio
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-slate-600">
@@ -64,11 +64,11 @@ function Perk({
   text: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6">
-      <span className="grid size-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+    <div className="rounded-2xl border border-emerald-200/60 bg-white p-6">
+      <span className="grid size-11 place-items-center rounded-xl bg-emerald-100 text-emerald-700">
         {icon}
       </span>
-      <h3 className="mt-4 text-base font-bold tracking-tight text-slate-900">{title}</h3>
+      <h3 className="mt-4 text-base font-bold tracking-tight text-emerald-950">{title}</h3>
       <p className="mt-1.5 text-sm leading-relaxed text-slate-500">{text}</p>
     </div>
   );

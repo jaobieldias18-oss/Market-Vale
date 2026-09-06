@@ -6,7 +6,7 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <Link
       href={`/categorias/${category.slug}`}
-      className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-lg hover:shadow-slate-900/5"
+      className="group relative overflow-hidden rounded-2xl border border-emerald-200/60 bg-white p-5 transition hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-900/10"
     >
       <div
         className="absolute -right-6 -top-6 size-24 rounded-full opacity-50 blur-2xl transition-opacity duration-300 group-hover:opacity-80"
@@ -21,9 +21,9 @@ export default function CategoryCard({ category }: { category: Category }) {
         >
           {category.icon}
         </div>
-        <ArrowUpRight className="size-4 text-slate-300 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-500" />
+        <ArrowUpRight className="size-4 text-slate-300 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-amber-500" />
       </div>
-      <h3 className="relative mt-4 font-bold tracking-tight text-slate-900 transition group-hover:text-emerald-700">
+      <h3 className="relative mt-4 font-bold tracking-tight text-emerald-950 transition group-hover:text-emerald-700">
         {category.name}
       </h3>
       <p className="relative mt-1 line-clamp-2 text-sm text-slate-500">{category.description}</p>

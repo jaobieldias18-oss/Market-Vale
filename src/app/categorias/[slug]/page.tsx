@@ -54,7 +54,7 @@ export default async function CategoryPage({
   return (
     <>
       <Navbar />
-      <div className="bg-emerald-600 py-14 text-center text-white">
+      <div className="bg-emerald-900 py-14 text-center text-white">
         <h1 className="text-3xl font-bold">{meta.icon} {meta.name}</h1>
         <p className="mx-auto mt-2 max-w-lg px-4 text-emerald-100">
           {category?.description ??
@@ -70,7 +70,7 @@ export default async function CategoryPage({
             placeholder="Buscar nesta categoria..."
             className="w-full bg-transparent text-sm outline-none"
           />
-          <button className="rounded-lg bg-emerald-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-emerald-700">
+          <button className="rounded-lg bg-emerald-700 px-4 py-1.5 text-sm font-semibold text-white hover:bg-emerald-800">
             Buscar
           </button>
         </form>
@@ -84,7 +84,7 @@ export default async function CategoryPage({
             </p>
             <Link
               href="/cadastro"
-              className="mt-6 inline-block rounded-xl bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700"
+              className="mt-6 inline-block rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white hover:bg-emerald-800"
             >
               Cadastrar {getCategoryFields(slug).label.toLowerCase()}
             </Link>

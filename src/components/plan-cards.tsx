@@ -8,15 +8,15 @@ import type { Plan, PlanId } from "@/lib/types";
 import { Check, Minus } from "lucide-react";
 
 const HIGHLIGHT: Record<string, string> = {
-  basico: "border-slate-200 bg-white",
-  profissional: "border-emerald-700 bg-emerald-700 text-white",
-  premium: "border-slate-900 bg-slate-900 text-white",
+  basico: "border-emerald-200/70 bg-white",
+  profissional: "border-emerald-800 bg-emerald-800 text-white",
+  premium: "border-emerald-950 bg-emerald-950 text-white",
 };
 
 const HIGHLIGHT_LABEL: Record<string, string> = {
-  basico: "text-slate-400",
-  profissional: "text-emerald-100",
-  premium: "text-slate-400",
+  basico: "text-emerald-950",
+  profissional: "text-amber-200",
+  premium: "text-amber-200",
 };
 
 export default function PlanCards({
@@ -93,8 +93,8 @@ export default function PlanCards({
                   <span
                     className={`grid size-5 place-items-center rounded-full border-2 ${
                       isCurrent
-                        ? "border-emerald-500 bg-emerald-500 text-white"
-                        : "border-slate-300"
+                        ? "border-amber-500 bg-amber-400 text-emerald-950"
+                        : "border-emerald-200"
                     }`}
                   >
                     {isCurrent && <Check className="size-3" />}
@@ -117,8 +117,8 @@ export default function PlanCards({
                 <span
                   className={`mt-5 rounded-lg py-2.5 text-center text-sm font-semibold transition ${
                     isCurrent
-                      ? "border border-emerald-500 text-emerald-600"
-                      : "bg-slate-900 text-white hover:bg-slate-800"
+                      ? "border border-amber-500 bg-amber-50 text-amber-700"
+                      : "bg-emerald-800 text-white hover:bg-emerald-900"
                   }`}
                 >
                   {isCurrent ? "Plano selecionado" : "Selecionar"}
@@ -127,10 +127,10 @@ export default function PlanCards({
                 <span
                   className={`mt-5 rounded-lg py-2.5 text-center text-sm font-semibold transition ${
                     plan.id === "basico"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                      ? "bg-amber-400 text-emerald-950 hover:bg-amber-300"
                       : plan.id === "premium"
-                        ? "bg-white text-slate-900 hover:bg-slate-100"
-                        : "bg-white text-emerald-700 hover:bg-emerald-50"
+                        ? "bg-amber-400 text-emerald-950 hover:bg-amber-300"
+                        : "bg-amber-400 text-emerald-950 hover:bg-amber-300"
                   }`}
                 >
                   {plan.id === "basico" ? "Escolher Básico" : `Escolher ${plan.name}`}

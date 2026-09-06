@@ -38,7 +38,7 @@ function LoginForm() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.png" alt="Market Vale" className="size-14 rounded-full object-cover" />
           </span>
-          <h1 className="mt-4 text-2xl font-bold text-slate-900">Entrar</h1>
+          <h1 className="mt-4 text-2xl font-bold text-emerald-950">Entrar</h1>
           <p className="mt-1 text-sm text-slate-500">Acesse seu painel de lojista</p>
         </div>
 
@@ -71,7 +71,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-60"
+            className="w-full rounded-lg bg-emerald-700 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-60"
           >
             {loading ? "Entrando..." : "Entrar"}
           </button>
@@ -79,7 +79,7 @@ function LoginForm() {
 
         <p className="mt-6 text-center text-sm text-slate-500">
           Ainda não tem conta?{" "}
-          <Link href="/cadastro" className="font-medium text-emerald-600 hover:underline">
+          <Link href="/cadastro" className="font-medium text-emerald-700 hover:underline">
             Cadastre-se
           </Link>
         </p>

@@ -116,7 +116,7 @@ function CreateStoreInner() {
           <div className="mt-6 text-center">
             <button
               onClick={() => setStep("dados")}
-              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-8 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-8 py-3.5 font-semibold text-white transition hover:bg-emerald-800"
             >
               Continuar com o plano {planName(planid)} <ArrowRight className="size-4" />
             </button>
@@ -219,7 +219,7 @@ function StepButton({
     <button
       onClick={onClick}
       className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
-        active ? "bg-emerald-600 text-white shadow" : "text-slate-500 hover:text-slate-800"
+        active ? "bg-emerald-700 text-white shadow" : "text-slate-500 hover:text-slate-800"
       }`}
     >
       {done && <Check className="size-4" />}
