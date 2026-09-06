@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CategoryCard from "@/components/category-card";
 import StoreCard from "@/components/store-card";
+import RiverWave from "@/components/river-wave";
 import { CATEGORIES as defaultCategorySlugs, CATEGORY_FIELDS } from "@/lib/constants";
 import type { Category, Store } from "@/lib/types";
 import {
@@ -99,20 +100,35 @@ export default async function HomePage() {
       <Navbar />
 
       <section className="mesh-bg relative overflow-hidden">
-        <div className="mx-auto max-w-6xl px-4 pb-16 pt-20 text-center md:pt-24">
-          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/70 px-4 py-1.5 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur">
-            <MapPin className="size-3.5" />
+        <div className="pointer-events-none absolute inset-0">
+          <span className="animate-bob absolute left-[6%] top-[18%] text-5xl opacity-25 md:text-7xl" style={{ rotate: "-12deg" }}>
+            🍌
+          </span>
+          <span className="animate-bob absolute right-[8%] top-[14%] text-4xl opacity-25 md:text-6xl" style={{ rotate: "10deg", animationDelay: "1.2s" }}>
+            🍌
+          </span>
+          <span className="animate-bob absolute right-[20%] bottom-[34%] hidden text-5xl opacity-15 md:block" style={{ rotate: "8deg", animationDelay: "2.4s" }}>
+            🌊
+          </span>
+          <span className="animate-bob absolute left-[16%] bottom-[28%] text-4xl opacity-15 md:text-5xl" style={{ rotate: "-8deg", animationDelay: "0.6s" }}>
+            🌊
+          </span>
+        </div>
+
+        <div className="mx-auto max-w-6xl px-4 pb-24 pt-20 text-center md:pt-24">
+          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-amber-200/90 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-700 shadow-sm backdrop-blur">
+            <MapPin className="size-3.5 text-emerald-600" />
             Vale do Ribeira · São Paulo
           </span>
 
           <h1 className="animate-fade-up mx-auto mt-6 max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 md:text-6xl">
-            Todos os negócios da sua região,{" "}
+            Do rio às bananas, os negócios do Vale{" "}
             <span className="gradient-text">em um só lugar</span>
           </h1>
 
           <p className="animate-fade-up mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Encontre confeitarias, cafeterias, advocacia, mercados e muito mais.
-            E se você é lojista, crie o seu site em minutos.
+            De mercados e confeitarias às lojas e serviços que fazem a região
+            girar — das margens do Ribeira aos campos de banana.
           </p>
 
           <div className="animate-fade-up mx-auto mt-10 max-w-2xl">
@@ -140,6 +156,29 @@ export default async function HomePage() {
             <HeroStat value={String(categories.length)} label="categorias" />
             <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da região" />
           </div>
+        </div>
+
+        <RiverWave className="absolute inset-x-0 -bottom-px text-[#f8fafc]" />
+      </section>
+
+      <section className="marquee-paused overflow-hidden border-y border-emerald-900/60 bg-gradient-to-r from-emerald-950 via-teal-950 to-cyan-950 py-3">
+        <div className="flex w-max animate-marquee items-center gap-8 whitespace-nowrap text-sm font-medium text-emerald-100">
+          <RegionPill text="Capital da Banana 🍌" />
+          <RegionPill text="Rio Ribeira de Iguape 🌊" />
+          <RegionPill text="Camarão de Iguape 🦐" />
+          <RegionPill text="Palmito do Vale 🌴" />
+          <RegionPill text="Cavernas do Diabo ⛰️" />
+          <RegionPill text="Mata Atlântica preservada 🌳" />
+          <RegionPill text="Farinha de banana 🍞" />
+          <RegionPill text="Pescado do Ribeira 🐟" />
+          <RegionPill text="Capital da Banana 🍌" />
+          <RegionPill text="Rio Ribeira de Iguape 🌊" />
+          <RegionPill text="Camarão de Iguape 🦐" />
+          <RegionPill text="Palmito do Vale 🌴" />
+          <RegionPill text="Cavernas do Diabo ⛰️" />
+          <RegionPill text="Mata Atlântica preservada 🌳" />
+          <RegionPill text="Farinha de banana 🍞" />
+          <RegionPill text="Pescado do Ribeira 🐟" />
         </div>
       </section>
 
@@ -215,6 +254,44 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      <section className="mx-auto max-w-6xl px-4 pt-24">
+        <div className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-wider text-emerald-600">
+            Nossa terra, nossa raiz
+          </p>
+          <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
+            O Vale do Ribeira por trás de cada negócio
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-slate-600">
+            É daqui que nasce a identidade da região — e é aqui que sua loja
+            encontra seus clientes de verdade.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <IdentityCard
+            emoji="🍌"
+            title="Capital da Banana"
+            text="A maior produção do Vale abastece o país. Banana aqui é cultura, renda e tradição de gerações."
+          />
+          <IdentityCard
+            emoji="🌊"
+            title="Rio Ribeira de Iguape"
+            text="O rio de águas cristalinas que cruza a região e dá nome ao nosso Vale."
+          />
+          <IdentityCard
+            emoji="🌳"
+            title="Mata Atlântica viva"
+            text="O maior remanescente preservado do país, com cavernas, quedas e rios de beleza rara."
+          />
+          <IdentityCard
+            emoji="🤝"
+            title="Quem sabe vai longe"
+            text="Quem produz no Vale encontra quem consome no Vale — tudo conectado em um só lugar."
+          />
+        </div>
+      </section>
 
       <section id="como-funciona" className="mx-auto max-w-6xl scroll-mt-16 px-4 pt-20">
         <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-8 text-white md:p-14">
@@ -313,6 +390,34 @@ function Step({
       </div>
       <h3 className="mt-4 text-lg font-bold tracking-tight">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-400">{text}</p>
+    </div>
+  );
+}
+
+function RegionPill({ text }: { text: string }) {
+  return (
+    <span className="flex items-center gap-2 rounded-full border border-emerald-800/60 bg-emerald-900/40 px-5 py-1.5 text-emerald-100">
+      {text}
+    </span>
+  );
+}
+
+function IdentityCard({
+  emoji,
+  title,
+  text,
+}: {
+  emoji: string;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="card card-hover p-6">
+      <div className="grid size-14 place-items-center rounded-2xl border border-emerald-100 bg-emerald-50 text-3xl">
+        {emoji}
+      </div>
+      <h3 className="mt-4 text-lg font-bold tracking-tight text-slate-900">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-slate-600">{text}</p>
     </div>
   );
 }
