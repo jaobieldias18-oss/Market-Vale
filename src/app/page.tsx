@@ -3,17 +3,6 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CategoryCard from "@/components/category-card";
 import StoreCard from "@/components/store-card";
-import RiverWave from "@/components/river-wave";
-import {
-  BananaMark,
-  RiverMark,
-  TreeMark,
-  FishMark,
-  CaveMark,
-  PalmMark,
-  BasketMark,
-  ValeScene,
-} from "@/components/illustrations";
 import { CATEGORIES as defaultCategorySlugs, CATEGORY_FIELDS } from "@/lib/constants";
 import type { Category, Store } from "@/lib/types";
 import {
@@ -110,78 +99,47 @@ export default async function HomePage() {
       <Navbar />
 
       <section className="mesh-bg relative overflow-hidden">
-        <div className="mx-auto max-w-6xl px-4 pb-24 pt-20 md:pt-24">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="text-center lg:text-left">
-              <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-amber-200/90 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-700 shadow-sm backdrop-blur">
-                <MapPin className="size-3.5 text-emerald-600" />
-                Vale do Ribeira · São Paulo
-              </span>
+        <div className="mx-auto max-w-6xl px-4 pb-16 pt-20 text-center md:pt-24">
+          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/70 px-4 py-1.5 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur">
+            <MapPin className="size-3.5" />
+            Vale do Ribeira · São Paulo
+          </span>
 
-              <h1 className="animate-fade-up mx-auto mt-6 max-w-2xl text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 md:text-5xl lg:mx-0 xl:text-6xl">
-                Do rio às bananas, os negócios do Vale{" "}
-                <span className="gradient-text">em um só lugar</span>
-              </h1>
+          <h1 className="animate-fade-up mx-auto mt-6 max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 md:text-6xl">
+            Todos os negócios da sua região,{" "}
+            <span className="gradient-text">em um só lugar</span>
+          </h1>
 
-              <p className="animate-fade-up mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 lg:mx-0">
-                De mercados e confeitarias às lojas e serviços que fazem a
-                região girar — das margens do Ribeira aos campos de banana.
-              </p>
+          <p className="animate-fade-up mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+            Encontre confeitarias, cafeterias, advocacia, mercados e muito mais.
+            E se você é lojista, crie o seu site em minutos.
+          </p>
 
-              <div className="animate-fade-up mx-auto mt-8 max-w-xl lg:mx-0">
-                <SearchBar />
-              </div>
-
-              <div className="animate-fade-up mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
-                <Link
-                  href="/cadastro"
-                  className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:shadow-emerald-500/40"
-                >
-                  Cadastre minha loja
-                  <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
-                </Link>
-                <Link
-                  href="/#categorias"
-                  className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:border-emerald-300 hover:text-emerald-700"
-                >
-                  Explorar negócios
-                </Link>
-              </div>
-
-              <div className="animate-fade-up mx-auto mt-10 grid max-w-xl grid-cols-3 gap-4 lg:mx-0">
-                <HeroStat value={String(totalStores)} label="negócios cadastrados" />
-                <HeroStat value={String(categories.length)} label="categorias" />
-                <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da região" />
-              </div>
-            </div>
-
-            <div className="animate-fade-up mt-6 hidden lg:block">
-              <ValeScene />
-            </div>
+          <div className="animate-fade-up mx-auto mt-10 max-w-2xl">
+            <SearchBar />
           </div>
-        </div>
 
-        <RiverWave className="absolute inset-x-0 -bottom-px text-[#f8fafc]" />
-      </section>
+          <div className="animate-fade-up mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/cadastro"
+              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:shadow-emerald-500/40"
+            >
+              Cadastre minha loja
+              <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/#categorias"
+              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:border-emerald-300 hover:text-emerald-700"
+            >
+              Explorar negócios
+            </Link>
+          </div>
 
-      <section className="marquee-paused overflow-hidden border-y border-emerald-900/60 bg-gradient-to-r from-emerald-950 via-teal-950 to-cyan-950 py-3">
-        <div className="flex w-max animate-marquee items-center gap-8 whitespace-nowrap text-sm font-medium text-emerald-100">
-          <RegionPill icon={<BananaMark size={18} />} text="Capital da Banana" />
-          <RegionPill icon={<RiverMark size={18} />} text="Rio Ribeira de Iguape" />
-          <RegionPill icon={<FishMark size={18} />} text="Camarão de Iguape" />
-          <RegionPill icon={<PalmMark size={18} />} text="Palmito do Vale" />
-          <RegionPill icon={<CaveMark size={18} />} text="Cavernas do Diabo" />
-          <RegionPill icon={<TreeMark size={18} />} text="Mata Atlântica preservada" />
-          <RegionPill icon={<BananaMark size={18} />} text="Farinha e banana-passa" />
-          <RegionPill icon={<FishMark size={18} />} text="Pescado do Ribeira" />
-          <RegionPill icon={<BananaMark size={18} />} text="Capital da Banana" />
-          <RegionPill icon={<RiverMark size={18} />} text="Rio Ribeira de Iguape" />
-          <RegionPill icon={<FishMark size={18} />} text="Camarão de Iguape" />
-          <RegionPill icon={<PalmMark size={18} />} text="Palmito do Vale" />
-          <RegionPill icon={<CaveMark size={18} />} text="Cavernas do Diabo" />
-          <RegionPill icon={<TreeMark size={18} />} text="Mata Atlântica preservada" />
-          <RegionPill icon={<BananaMark size={18} />} text="Farinha e banana-passa" />
-          <RegionPill icon={<FishMark size={18} />} text="Pescado do Ribeira" />
+          <div className="animate-fade-up mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-4">
+            <HeroStat value={String(totalStores)} label="negócios cadastrados" />
+            <HeroStat value={String(categories.length)} label="categorias" />
+            <HeroStat value={cityCount > 0 ? String(cityCount) : "10"} label="cidades da região" />
+          </div>
         </div>
       </section>
 
@@ -257,44 +215,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      <section className="mx-auto max-w-6xl px-4 pt-24">
-        <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-emerald-600">
-            Nossa terra, nossa raiz
-          </p>
-          <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
-            O Vale do Ribeira por trás de cada negócio
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-600">
-            É daqui que nasce a identidade da região — e é aqui que sua loja
-            encontra seus clientes de verdade.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <IdentityCard
-            icon={<BananaMark size={30} />}
-            title="Capital da Banana"
-            text="A maior produção do Vale abastece o país. Banana aqui é cultura, renda e tradição de gerações."
-          />
-          <IdentityCard
-            icon={<RiverMark size={30} />}
-            title="Rio Ribeira de Iguape"
-            text="O rio de águas cristalinas que cruza a região e dá nome ao nosso Vale."
-          />
-          <IdentityCard
-            icon={<TreeMark size={30} />}
-            title="Mata Atlântica viva"
-            text="O maior remanescente preservado do país, com cavernas, quedas e rios de beleza rara."
-          />
-          <IdentityCard
-            icon={<BasketMark size={30} />}
-            title="Quem sabe vai longe"
-            text="Quem produz no Vale encontra quem consome no Vale — tudo conectado em um só lugar."
-          />
-        </div>
-      </section>
 
       <section id="como-funciona" className="mx-auto max-w-6xl scroll-mt-16 px-4 pt-20">
         <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-8 text-white md:p-14">
@@ -393,35 +313,6 @@ function Step({
       </div>
       <h3 className="mt-4 text-lg font-bold tracking-tight">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-400">{text}</p>
-    </div>
-  );
-}
-
-function RegionPill({ icon, text }: { icon: React.ReactNode; text: string }) {
-  return (
-    <span className="flex items-center gap-2 rounded-full border border-emerald-800/60 bg-emerald-900/40 px-5 py-1.5 text-emerald-100">
-      {icon}
-      {text}
-    </span>
-  );
-}
-
-function IdentityCard({
-  icon,
-  title,
-  text,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="card card-hover p-6">
-      <div className="grid size-16 place-items-center rounded-2xl border border-emerald-100 bg-emerald-50">
-        {icon}
-      </div>
-      <h3 className="mt-4 text-lg font-bold tracking-tight text-slate-900">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">{text}</p>
     </div>
   );
 }
