@@ -64,8 +64,8 @@ function Perk({
   text: string;
 }) {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6">
-      <span className="grid size-11 place-items-center rounded-2xl bg-emerald-50 text-emerald-600">
+    <div className="rounded-2xl border border-slate-200 bg-white p-6">
+      <span className="grid size-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
         {icon}
       </span>
       <h3 className="mt-4 text-base font-bold tracking-tight text-slate-900">{title}</h3>

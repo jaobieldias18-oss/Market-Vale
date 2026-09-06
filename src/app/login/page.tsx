@@ -31,7 +31,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="mx-auto mt-16 max-w-md px-4">
+    <div className="mx-auto mt-14 max-w-md px-4">
       <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
         <div className="flex flex-col items-center">
           <span className="grid size-14 place-items-center overflow-hidden">
@@ -49,7 +49,7 @@ function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+              className="input"
               placeholder="voce@email.com"
             />
           </Field>
@@ -59,7 +59,7 @@ function LoginForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+              className="input"
               placeholder="••••••••"
             />
           </Field>
@@ -71,7 +71,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
+            className="w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-60"
           >
             {loading ? "Entrando..." : "Entrar"}
           </button>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import Loading from "@/components/loading";
 import type { Store } from "@/lib/types";
 import { Building2, Eye, Users, CreditCard } from "lucide-react";
 
@@ -113,14 +114,6 @@ function MiniLink({ href, label, value }: { href: string; label: string; value: 
       <span className="text-slate-600">{label}</span>
       <span className="font-semibold text-emerald-600">{value}</span>
     </Link>
-  );
-}
-
-function Loading() {
-  return (
-    <div className="grid min-h-[50vh] place-items-center text-sm text-slate-400">
-      Carregando...
-    </div>
   );
 }
 export const runtime = "edge";

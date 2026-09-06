@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
+  --background: #f7f9f8;
   --foreground: #0f172a;
+  --accent: #059669;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
 html {
@@ -17,14 +21,13 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: #10b981;
+  background: #059669;
   color: #fff;
 }
 
@@ -36,59 +39,61 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #c8d0d9;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #97a2b0;
 }
 
+/* ---------- Input padrão ---------- */
 .input {
   width: 100%;
-  border: 1px solid rgb(203 213 225);
-  border-radius: 0.75rem;
+  border: 1px solid #d7dde5;
+  border-radius: 0.625rem;
   padding: 0.625rem 0.875rem;
   font-size: 0.875rem;
   outline: none;
   background: #fff;
   color: #0f172a;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.input::placeholder {
+  color: #94a3b8;
 }
 .input:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgb(16 185 129 / 0.15);
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgb(5 150 105 / 0.14);
 }
 
+/* ---------- Foco padrão ---------- */
+:focus-visible {
+  outline: 2px solid rgb(5 150 105 / 0.6);
+  outline-offset: 2px;
+}
+
+/* ---------- Utilidades ---------- */
 @utility mesh-bg {
   background-image:
-    radial-gradient(at 15% 10%, rgb(16 185 129 / 0.16) 0px, transparent 45%),
-    radial-gradient(at 88% 5%, rgb(6 182 212 / 0.14) 0px, transparent 40%),
-    radial-gradient(at 75% 90%, rgb(16 185 129 / 0.1) 0px, transparent 45%),
-    radial-gradient(at 0% 80%, rgb(100 116 139 / 0.08) 0px, transparent 40%);
+    radial-gradient(at 20% 12%, rgb(5 150 105 / 0.1) 0px, transparent 42%),
+    radial-gradient(at 82% 8%, rgb(14 165 233 / 0.08) 0px, transparent 38%),
+    radial-gradient(at 78% 88%, rgb(251 191 36 / 0.09) 0px, transparent 40%),
+    radial-gradient(at 4% 84%, rgb(5 150 105 / 0.08) 0px, transparent 42%);
 }
 
 @utility glass {
-  background-color: rgb(255 255 255 / 0.72);
+  background-color: rgb(255 255 255 / 0.82);
   backdrop-filter: blur(14px) saturate(1.4);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
 }
 
-@utility card {
-  border-radius: 1.25rem;
-  border: 1px solid rgb(226 232 240);
+@utility surface {
   background-color: #fff;
-  box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.05);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-.card-hover:hover {
-  transform: translateY(-4px);
-  border-color: rgb(16 185 129 / 0.4);
-  box-shadow:
-    0 12px 24px -8px rgb(15 23 42 / 0.12),
-    0 4px 8px -4px rgb(15 23 42 / 0.06);
+  border: 1px solid #e7ebf0;
+  border-radius: 0.9rem;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.03), 0 8px 24px -18px rgb(15 23 42 / 0.12);
 }
 
 @utility gradient-text {
@@ -108,7 +113,6 @@ body {
     transform: translateY(0);
   }
 }
-
 @utility animate-fade-up {
   animation: fade-up 0.6s ease both;
 }

@@ -15,9 +15,9 @@ export default function StoreCard({
   return (
     <Link
       href={`/loja/${store.slug}`}
-      className="card card-hover group overflow-hidden !rounded-2xl"
+      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-lg hover:shadow-slate-900/5"
     >
-      <div className="relative h-40 overflow-hidden">
+      <div className="relative h-40 overflow-hidden bg-slate-100">
         {cover ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -27,13 +27,13 @@ export default function StoreCard({
             loading="lazy"
           />
         ) : (
-          <div className="flex size-full items-center justify-center bg-gradient-to-br from-emerald-100 via-teal-50 to-sky-100 text-5xl">
+          <div className="flex size-full items-center justify-center text-5xl">
             {category?.icon ?? "✨"}
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/25 via-transparent to-transparent" />
         {store.is_featured && (
-          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-950 shadow-sm">
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-950">
             <Star className="size-3 fill-amber-950" />
             Destaque
           </span>

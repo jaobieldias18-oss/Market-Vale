@@ -99,8 +99,8 @@ export default async function HomePage() {
       <Navbar />
 
       <section className="mesh-bg relative overflow-hidden">
-        <div className="mx-auto max-w-6xl px-4 pb-16 pt-20 text-center md:pt-24">
-          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/70 px-4 py-1.5 text-sm font-medium text-emerald-700 shadow-sm backdrop-blur">
+        <div className="mx-auto max-w-6xl px-4 pb-20 pt-20 text-center md:pt-28">
+          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/70 px-4 py-1.5 text-sm font-medium text-emerald-700">
             <MapPin className="size-3.5" />
             Vale do Ribeira · São Paulo
           </span>
@@ -122,14 +122,14 @@ export default async function HomePage() {
           <div className="animate-fade-up mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/cadastro"
-              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:shadow-emerald-500/40"
+              className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-emerald-700"
             >
               Cadastre minha loja
               <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/#categorias"
-              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:border-emerald-300 hover:text-emerald-700"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white/80 px-7 py-3.5 text-base font-semibold text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700"
             >
               Explorar negócios
             </Link>
@@ -216,10 +216,11 @@ export default async function HomePage() {
         </section>
       )}
 
-      <section id="como-funciona" className="mx-auto max-w-6xl scroll-mt-16 px-4 pt-20">
-        <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-8 text-white md:p-14">
+      <section id="como-funciona" className="mx-auto max-w-6xl scroll-mt-16 px-4 pt-24">
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 p-8 text-white md:p-14">
           <div className="absolute -left-24 -top-24 size-72 rounded-full bg-emerald-500/20 blur-3xl" />
-          <div className="absolute -bottom-24 -right-24 size-72 rounded-full bg-cyan-500/15 blur-3xl" />
+          <div className="absolute -bottom-24 -right-24 size-72 rounded-full bg-sky-500/10 blur-3xl" />
+          <div className="absolute -right-20 -top-16 size-40 rounded-full bg-amber-400/10 blur-3xl" />
 
           <div className="relative text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-emerald-400">
@@ -251,7 +252,7 @@ export default async function HomePage() {
           <div className="relative mt-12 text-center">
             <Link
               href="/cadastro"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-7 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl"
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-7 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
             >
               Começar agora <ArrowRight className="size-4" />
             </Link>
@@ -268,7 +269,7 @@ function SearchBar() {
   return (
     <form
       action="/categorias/outros"
-      className="group flex items-center gap-2 rounded-full border border-slate-200 bg-white p-2 pl-5 shadow-xl shadow-slate-900/5 ring-1 ring-black/5 transition focus-within:border-emerald-400 focus-within:ring-2 focus-within:ring-emerald-100"
+      className="group flex items-center gap-2 rounded-xl border border-slate-300 bg-white p-2 pl-5 transition focus-within:border-emerald-400 focus-within:ring-2 focus-within:ring-emerald-100"
     >
       <Search className="size-5 shrink-0 text-slate-400" />
       <input
@@ -278,7 +279,7 @@ function SearchBar() {
       />
       <button
         type="submit"
-        className="shrink-0 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition hover:shadow-lg"
+        className="shrink-0 rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
       >
         Buscar
       </button>
@@ -308,7 +309,7 @@ function Step({
 }) {
   return (
     <div className="text-center">
-      <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-emerald-500/25 to-cyan-500/15 text-emerald-300 ring-1 ring-emerald-400/20">
+      <div className="mx-auto grid size-14 place-items-center rounded-xl bg-emerald-500/15 text-emerald-300">
         {icon}
       </div>
       <h3 className="mt-4 text-lg font-bold tracking-tight">{title}</h3>

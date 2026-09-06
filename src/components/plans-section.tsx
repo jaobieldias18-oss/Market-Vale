@@ -205,7 +205,7 @@ function PlansSectionInner({ store }: { store: Store }) {
         <button
           onClick={openPortal}
           disabled={portalLoading}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-emerald-400 hover:text-emerald-700 disabled:opacity-60"
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-400 hover:text-emerald-700 disabled:opacity-60"
         >
           <ExternalLink className="size-4" />
           {portalLoading ? "Abrindo..." : "Gerenciar assinatura no Stripe"}

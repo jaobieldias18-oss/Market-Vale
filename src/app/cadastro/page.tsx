@@ -61,7 +61,7 @@ export default function CadastroPage() {
         </p>
       </div>
 
-      <div className="mx-auto mt-8 flex w-full max-w-xl gap-2 rounded-full border border-slate-200 bg-white p-1.5 shadow-sm">
+      <div className="mx-auto mt-8 flex w-full max-w-xl gap-1 rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm">
         <StepButton
           active={step === "planos"}
           onClick={() => setStep("planos")}
@@ -85,7 +85,7 @@ export default function CadastroPage() {
           <div className="mt-6 text-center">
             <button
               onClick={() => setStep("conta")}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:shadow-xl"
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-8 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
             >
               Continuar com o plano {planName(planid)} <ArrowRight className="size-4" />
             </button>
@@ -110,7 +110,7 @@ export default function CadastroPage() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                  className="input"
                   placeholder="Maria da Silva"
                 />
               </Field>
@@ -120,7 +120,7 @@ export default function CadastroPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                  className="input"
                   placeholder="voce@email.com"
                 />
               </Field>
@@ -131,7 +131,7 @@ export default function CadastroPage() {
                   minLength={6}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                  className="input"
                   placeholder="Mínimo de 6 caracteres"
                 />
               </Field>
@@ -143,7 +143,7 @@ export default function CadastroPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
+                className="w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-60"
               >
                 {loading ? "Criando conta..." : "Criar conta"}
               </button>
@@ -180,7 +180,7 @@ function StepButton({
   return (
     <button
       onClick={onClick}
-      className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
+      className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
         active ? "bg-emerald-600 text-white shadow" : "text-slate-500 hover:text-slate-800"
       }`}
     >

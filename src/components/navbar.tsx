@@ -51,15 +51,15 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "glass border-b border-slate-200/70 shadow-[0_4px_24px_-12px_rgb(15_23_42_/_0.15)]"
+          ? "glass border-b border-slate-200/80"
           : "border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="group flex items-center gap-2.5">
-          <span className="grid size-10 place-items-center overflow-hidden transition group-hover:scale-105">
+      <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+        <Link href="/" className="group flex items-center">
+          <span className="grid size-9 place-items-center overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Market Vale" className="size-10 rounded-full object-cover" />
+            <img src="/logo.png" alt="Market Vale" className="size-9 rounded-full object-cover" />
           </span>
         </Link>
 
@@ -84,7 +84,7 @@ export default function Navbar() {
               {role === "admin" && (
                 <Link
                   href="/admin"
-                  className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-emerald-300 hover:text-emerald-700"
+                  className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700"
                 >
                   <LayoutDashboard className="size-4" />
                   Admin
@@ -92,7 +92,7 @@ export default function Navbar() {
               )}
               <Link
                 href="/dashboard"
-                className="rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition hover:shadow-lg hover:shadow-emerald-500/30"
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
               >
                 Minha loja
               </Link>
@@ -113,7 +113,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/cadastro"
-                className="rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition hover:shadow-lg hover:shadow-emerald-500/30"
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
               >
                 Criar loja
               </Link>
@@ -122,7 +122,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="grid size-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm md:hidden"
+          className="grid size-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Abrir menu"
         >
@@ -131,43 +131,43 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="glass z-50 flex flex-col gap-3 border-t border-slate-200/70 px-4 py-4 md:hidden">
+        <div className="glass z-50 flex flex-col gap-3 border-t border-slate-200/80 px-4 py-4 md:hidden">
           <Link
             href="/"
             onClick={() => setOpen(false)}
-            className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100"
+            className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-slate-100"
           >
             Início
           </Link>
           <Link
             href="/#categorias"
             onClick={() => setOpen(false)}
-            className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100"
+            className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-slate-100"
           >
             Categorias
           </Link>
           <Link
             href="/#como-funciona"
             onClick={() => setOpen(false)}
-            className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100"
+            className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-slate-100"
           >
             Como funciona
           </Link>
           <Link
             href="/planos"
             onClick={() => setOpen(false)}
-            className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100"
+            className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-slate-100"
           >
             Planos
           </Link>
-          <div className="mt-2 border-t border-slate-200/70 pt-3">
+          <div className="mt-2 border-t border-slate-200/80 pt-3">
             {loading ? null : hasSession ? (
               <>
                 {role === "admin" && (
                   <Link
                     href="/admin"
                     onClick={() => setOpen(false)}
-                    className="block rounded-xl px-3 py-2 text-sm font-semibold text-slate-700"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-slate-700"
                   >
                     Painel Admin
                   </Link>
@@ -175,7 +175,7 @@ export default function Navbar() {
                 <Link
                   href="/dashboard"
                   onClick={() => setOpen(false)}
-                  className="block rounded-xl px-3 py-2 text-sm font-semibold text-emerald-600"
+                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-emerald-600"
                 >
                   Minha loja
                 </Link>
@@ -191,14 +191,14 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setOpen(false)}
-                  className="block rounded-xl px-3 py-2 text-sm font-medium"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium"
                 >
                   Entrar
                 </Link>
                 <Link
                   href="/cadastro"
                   onClick={() => setOpen(false)}
-                  className="mt-1 block rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2.5 text-center text-sm font-semibold text-white"
+                  className="mt-1 block rounded-lg bg-emerald-600 px-3 py-2.5 text-center text-sm font-semibold text-white hover:bg-emerald-700"
                 >
                   Criar loja
                 </Link>

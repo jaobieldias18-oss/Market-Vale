@@ -9,8 +9,8 @@ import { Check, Minus } from "lucide-react";
 
 const HIGHLIGHT: Record<string, string> = {
   basico: "border-slate-200 bg-white",
-  profissional: "border-transparent bg-gradient-to-b from-emerald-600 to-teal-700 text-white shadow-xl shadow-emerald-500/25",
-  premium: "border-transparent bg-slate-950 text-white shadow-xl shadow-slate-900/25",
+  profissional: "border-emerald-700 bg-emerald-700 text-white",
+  premium: "border-slate-900 bg-slate-900 text-white",
 };
 
 const HIGHLIGHT_LABEL: Record<string, string> = {
@@ -68,10 +68,10 @@ export default function PlanCards({
             <Clickable
               key={plan.id}
               {...(wrapper as Record<string, string>)}
-              className={`relative flex flex-col rounded-3xl border p-6 text-left transition duration-200 ${
+              className={`relative flex flex-col rounded-2xl border p-6 text-left transition duration-200 ${
                 selectable
                   ? isCurrent
-                    ? "border-emerald-500 ring-2 ring-emerald-200 shadow-lg"
+                    ? "border-emerald-500 ring-2 ring-emerald-200"
                     : "border-slate-200 bg-white hover:border-emerald-300 hover:shadow-md"
                   : `${highlight} hover:-translate-y-1`
               }`}
@@ -115,7 +115,7 @@ export default function PlanCards({
               </ul>
               {selectable ? (
                 <span
-                  className={`mt-5 rounded-full py-2.5 text-center text-sm font-semibold transition ${
+                  className={`mt-5 rounded-lg py-2.5 text-center text-sm font-semibold transition ${
                     isCurrent
                       ? "border border-emerald-500 text-emerald-600"
                       : "bg-slate-900 text-white hover:bg-slate-800"
@@ -125,9 +125,9 @@ export default function PlanCards({
                 </span>
               ) : (
                 <span
-                  className={`mt-5 rounded-full py-2.5 text-center text-sm font-semibold transition ${
+                  className={`mt-5 rounded-lg py-2.5 text-center text-sm font-semibold transition ${
                     plan.id === "basico"
-                      ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/25"
+                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
                       : plan.id === "premium"
                         ? "bg-white text-slate-900 hover:bg-slate-100"
                         : "bg-white text-emerald-700 hover:bg-emerald-50"
@@ -141,7 +141,7 @@ export default function PlanCards({
         })}
       </div>
 
-      <div className="mt-8 overflow-x-auto rounded-3xl border border-slate-200 bg-white">
+      <div className="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
         <table className="w-full min-w-[560px] text-left text-sm">
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-500">

@@ -6,15 +6,15 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <Link
       href={`/categorias/${category.slug}`}
-      className="card card-hover group relative overflow-hidden p-5"
+      className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-lg hover:shadow-slate-900/5"
     >
       <div
-        className="absolute -right-6 -top-6 size-24 rounded-full opacity-60 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+        className="absolute -right-6 -top-6 size-24 rounded-full opacity-50 blur-2xl transition-opacity duration-300 group-hover:opacity-80"
         style={{ backgroundColor: `${category.color}33` }}
       />
       <div className="relative flex items-start justify-between">
         <div
-          className="grid size-14 place-items-center rounded-2xl text-3xl shadow-sm ring-1 ring-black/5"
+          className="grid size-14 place-items-center rounded-xl text-3xl"
           style={{
             background: `linear-gradient(135deg, ${category.color}24, ${category.color}0d)`,
           }}

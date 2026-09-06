@@ -46,8 +46,8 @@ export default async function DashboardPage() {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={logo} alt={store.name} className="size-16 rounded-2xl object-cover" />
         ) : (
-          <span className="grid size-16 place-items-center rounded-2xl bg-emerald-100 text-3xl">
-            {category?.icon ?? "âœ¨"}
+          <span className="grid size-16 place-items-center rounded-2xl bg-emerald-50 text-3xl">
+            {category?.icon ?? "✨"}
           </span>
         )}
         <div className="flex-1">
@@ -123,7 +123,7 @@ export default async function DashboardPage() {
 
 function Stat({ icon, value, label }: { icon: React.ReactNode; value: string | number; label: string }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-emerald-200">
       <div className="flex items-center gap-2 text-emerald-600">
         {icon}
         <span className="text-2xl font-bold text-slate-900">{value}</span>
