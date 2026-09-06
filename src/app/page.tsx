@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CategoryCard from "@/components/category-card";
 import StoreCard from "@/components/store-card";
+import { ValeToWorldScene } from "@/components/vale-scene";
 import { CATEGORIES as defaultCategorySlugs, CATEGORY_FIELDS } from "@/lib/constants";
 import type { Category, Store } from "@/lib/types";
 import {
@@ -189,6 +190,57 @@ export default async function HomePage() {
           {categories.map((cat) => (
             <CategoryCard key={cat.id} category={cat} />
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pt-20">
+        <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 px-6 py-10 text-white shadow-xl md:px-12 md:py-14">
+          <div className="pointer-events-none absolute -right-20 -top-20 size-72 rounded-full bg-cyan-400/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-20 size-72 rounded-full bg-emerald-400/15 blur-3xl" />
+
+          <div className="relative grid items-center gap-10 lg:grid-cols-2">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-emerald-300">
+                Conectando a região
+              </p>
+              <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight md:text-5xl">
+                Do{" "}
+                <span className="bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">
+                  Vale
+                </span>{" "}
+                para o{" "}
+                <span className="bg-gradient-to-r from-emerald-300 to-cyan-300 bg-clip-text text-transparent">
+                  mundo
+                </span>
+              </h2>
+              <p className="mt-4 max-w-md text-emerald-100/80">
+                Do rio às pontes da cidade, o que nasce no Vale do Ribeira
+                encontra clientes de qualquer lugar — tudo num link, do jeito
+                certo.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/cadastro"
+                  className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-emerald-900 shadow-lg transition hover:bg-emerald-50"
+                >
+                  Levar meu negócio ao mundo
+                </Link>
+                <Link
+                  href="/#categorias"
+                  className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10"
+                >
+                  Conhecer as lojas
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+              <div className="overflow-hidden rounded-3xl ring-1 ring-white/15 shadow-2xl">
+                <ValeToWorldScene />
+              </div>
+              <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
+            </div>
+          </div>
         </div>
       </section>
 
