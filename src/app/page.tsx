@@ -3,7 +3,6 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CategoryCard from "@/components/category-card";
 import StoreCard from "@/components/store-card";
-import { ValeToWorldScene } from "@/components/vale-scene";
 import { CATEGORIES as defaultCategorySlugs, CATEGORY_FIELDS } from "@/lib/constants";
 import type { Category, Store } from "@/lib/types";
 import {
@@ -235,8 +234,13 @@ export default async function HomePage() {
             </div>
 
             <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-              <div className="overflow-hidden rounded-3xl ring-1 ring-white/15 shadow-2xl">
-                <ValeToWorldScene />
+              <div className="overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/15">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/vale-banner.png"
+                  alt="Rio, ponte e cidade do Vale do Ribeira"
+                  className="h-auto w-full"
+                />
               </div>
               <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
             </div>
